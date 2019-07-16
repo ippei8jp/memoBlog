@@ -1,0 +1,14 @@
+theme: jekyll-theme-leap-day
+encding: utf-8
+plugins: 
+  - jekyll-github-metadata
+
+source: .
+exclude: [server.sh, Gemfile, Gemfile.lock]
+
+# これを書いておくとsite.github変数のリポジトリ関連の値を上書きできる
+# repository:     ippei8jp/BlogTest333
+
+title:          いっぺーちゃんのメモブログ
+description:    作業メモ
+show_downloads: false

@@ -1,0 +1,52 @@
+---
+---
+// jekyllで使用するscssファイルには先頭に「---」2行が必要
+
+// ヘッダの色
+$default_color:   #00b300;
+$top_color:       #0d5bee;
+$debug_color:     #ff66a3;
+
+// オリジナルの設定をすこしいじりたかったので、カスタマイズしたscssファイルを使用
+// カスタマイズしたscssファイル はプロジェクトディレクトリの_sassにある。
+// @import "{{ site.theme }}";
+@import "my_theme";
+
+/* アイコン表示用 */
+.avatar {
+    height: 64px;
+    width: 64px;
+    border-radius: 999em;
+    margin-right: 20px;
+}
+
+/* -------- copy buttonの設定 -------- */
+/* コードの領域(preの親) */
+div.highlight {
+    position: relative;
+}
+
+/* コピーボタン(非表示にしておく) */
+.do_copy_button {
+    display: none;
+/*
+    position: absolute;
+    right: 0; top: 0;
+*/
+    position: -webkit-sticky; /* safari対応 */
+    position: sticky;
+    top:   0;
+    float: right;
+    margin: 0 0 0 -100px;
+
+    padding: 3px 6px 1px 6px;
+    font-size: 1.1rem;
+    color: #fff;
+    background: #ff8080;
+    cursor: pointer;
+}
+
+/* コードの領域にマウスオンでコピーボタンを表示 */
+div.highlight:hover .do_copy_button {
+    display: inline-block;
+}
