@@ -1,11 +1,14 @@
 // -------- index関連処理 --------
 $(function() {
+  let outlineLabelNumber = 0;
   $("section h1, section h2, section h3").each(function(){
     // IDに日本語も使いたいので、「英数とアンダーバー(\w)、マイナス(-)以外」削除の処理を
     // 削除すべき文字コード指定に変更
     // $("nav ul").append("<li class='tag-" + this.nodeName.toLowerCase() + "'><a href='#" + $(this).text().toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g,'') + "'>" + $(this).text() + "</a></li>");
     // $(this).attr("id",$(this).text().toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g,''));
-    let tmpStr = $(this).text().toLowerCase().replace(/ /g, '-').replace(/[\x20-\x2c\x2e\x2f\x3a-\x40\x5b-\x5f\x7b-\x7f]+/g,'');
+    // 見出しが同じだとIDがダブるので、正常にジャンプできなくなるため、ID付けルールを変更
+    // let tmpStr = $(this).text().toLowerCase().replace(/ /g, '-').replace(/[\x20-\x2c\x2e\x2f\x3a-\x40\x5b-\x5f\x7b-\x7f]+/g,'');
+    let tmpStr = 'outline_label_' + ('000' + outlineLabelNumber++).slice(-3);
     $("nav ul").append("<li class='tag-" + this.nodeName.toLowerCase() + "'><a href='#" + tmpStr + "'>" + $(this).text() + "</a></li>");
     $(this).attr("id", tmpStr);
     $("nav ul li:first-child a").parent().addClass("active");

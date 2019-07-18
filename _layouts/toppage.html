@@ -36,7 +36,13 @@
           {% endfor %}
         </select>
       </p>
-      <ul></ul>
+      <div class="outline">
+        <ul></ul>
+      </div>
+      <p class="to_top">
+        <a href="#" onClick="$('body,html').animate({scrollTop: 0                   },1500); return false;">最初</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" onClick="$('body,html').animate({scrollTop: $(document).height()},1500); return false;">最後</a>
+      </p>
     </nav>
     <div class="wrapper">
       <section>

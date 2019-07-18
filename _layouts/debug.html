@@ -19,8 +19,14 @@
     </header>
 
     <nav>
-      <ul></ul>
-      <p class="to_top"><a href="{{ site.baseurl }}/">トップページ</a></p>
+      <div class="outline">
+        <ul></ul>
+      </div>
+      <p class="to_top">
+        <a href="{{ site.baseurl }}/">トップページ</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" onClick="$('body,html').animate({scrollTop: 0                   },1500); return false;">最初</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" onClick="$('body,html').animate({scrollTop: $(document).height()},1500); return false;">最後</a>
+      </p>
     </nav>
     <div class="wrapper">
       <section>
