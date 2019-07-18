@@ -1,3 +1,15 @@
+// -------- 表示幅調整処理 --------
+$(function() {
+  let w1 =  $('nav').width();           // navの幅と
+  let w2 =  $('div.wrapper').width();   // wrapperの幅に
+  let body_width = w1 + w2 + 40;        // とりあえずのマージン分を加算して全体の幅にする
+  $('body').css({
+        "width": body_width,
+        "margin-right": "auto",         // body 全体を中央に表示するための設定
+        "margin-left": "auto"
+      });
+});
+
 // -------- index関連処理 --------
 $(function() {
   let outlineLabelNumber = 0;
