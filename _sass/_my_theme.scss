@@ -87,21 +87,51 @@ blockquote {
     /* デフォルトの背景色 */
     background-color: #e0e0e0;
 
-    /* 各状態で背景色を変える */
+    /* is-* クラスの接頭文字列を白抜き(影付き)文字にする */
+    // text-stroke より text-shadow の方がおススメらしい
+    &[class^="is-"], 
+    &[class*=" is-"] {
+        &:before {
+            font-size: 20px;
+            font-weight: bold;
+            color: #FFF;
+            text-shadow:  2px 2px 1px #666,
+                         -2px 2px 1px #666,
+                          2px -2px 1px #666,
+                         -2px -2px 1px #666;
+        }
+    }
+
+    /* 各状態で背景色と接頭文字列を変える */
     &.is-note {
         background-color: #e0f2ff;
+        &:before {
+            content: "NOTE\A";
+        }
     }
     &.is-warning {
         background-color: #fff1cc;
+        &:before {
+            content: "WARNING\A";
+        }
     }
     &.is-error {
         background-color: #ffcccc;
+        &:before {
+            content: "ERROR\A";
+        }
     }
     &.is-tip {
         background-color: #caffba;
+        &:before {
+            content: "TIP\A";
+        }
     }
     &.is-important {
         background-color: #ffd4ab;
+        &:before {
+            content: "IMPORTANT\A";
+        }
     }
 }
 

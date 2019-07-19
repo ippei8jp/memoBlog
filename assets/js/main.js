@@ -93,34 +93,29 @@ $(function() {
 $(function() {
     $('blockquote').each(function(i, element) {
         let str = $(element).text();
-        if (str.match(/^\s*\[\!NOTE\]/)) {                              // ブロック指定子と一致するか？
-            let tmp_str = str.replace(/^\s*\[\!NOTE\]/, '');            // ブロック指定子の削除
-            $(element).text(tmp_str);
-            $(element).prepend('<strong>==== NOTE ====</strong><br>');  // ブロックタイプの表示
-            $(element).addClass('is-note');                             // 背景色変更のためのクラス指定
+        if (str.match(/^\s*\[\!NOTE\]/)) {                                  // ブロック指定子と一致するか？先頭の改行とスペースを無視するため^\s*をつける
+            let tmp_html = $(element).html().replace(/\s*\[\!NOTE\]/, '');  // pタグを無視するため^は付けない
+            $(element).html(tmp_html);
+            $(element).addClass('is-note');                                 // 背景色変更のためのクラス指定
         }
         else if (str.match(/^\s*\[\!WARNING\]/)) {
-            let tmp_str = str.replace(/^\s*\[\!WARNING\]/, '');
-            $(element).text(tmp_str);
-            $(element).prepend('<strong>==== WARNING ====</strong><br>');
+            let tmp_html = $(element).html().replace(/\s*\[\!WARNING\]/, '');
+            $(element).html(tmp_html);
             $(element).addClass('is-warning');
         }
         else if (str.match(/^\s*\[\!ERROR\]/)) {
-            let tmp_str = str.replace(/^\s*\[\!ERROR\]/, '');
-            $(element).text(tmp_str);
-            $(element).prepend('<strong>==== ERROR ====</strong><br>');
+            let tmp_html = $(element).html().replace(/\s*\[\!ERROR\]/, '');
+            $(element).html(tmp_html);
             $(element).addClass('is-error');
         }
         else if (str.match(/^\s*\[\!TIP\]/)) {
-            let tmp_str = str.replace(/^\s*\[\!TIP\]/, '');
-            $(element).text(tmp_str);
-            $(element).prepend('<strong>==== TIP ====</strong><br>');
+            let tmp_html = $(element).html().replace(/\s*\[\!TIP\]/, '');
+            $(element).html(tmp_html);
             $(element).addClass('is-tip');
         }
         else if (str.match(/^\s*\[\!IMPORTANT\]/)) {
-            let tmp_str = str.replace(/^\s*\[\!IMPORTANT\]/, '');
-            $(element).text(tmp_str);
-            $(element).prepend('<strong>==== IMPORTANT ====</strong><br>');
+            let tmp_html = $(element).html().replace(/\s*\[\!IMPORTANT\]/, '');
+            $(element).html(tmp_html);
             $(element).addClass('is-important');
         }
     });
