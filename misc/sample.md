@@ -108,6 +108,8 @@ print("Hello world!")
 print("Hello world!")
 ```
 
+<!-- ファイル名を付けたいときはこれを指定-->
+{% include filename.html filename="hoge.py" %}
 ```python
 # 言語指定あり スクロールバーあり
 print("Hello world!")
@@ -121,15 +123,25 @@ print("Hello world!")
 ```
 
 # コメント
-コメントの上
+
+コメント(その１)の上
 {::comment}
-ここはコメントなので表示
-されることはありません。
+ここはコメントなので表示されることはありません。
 HTMLには出力されます。
 {:/comment}
-コメントの下
+コメント(その１)の下
+
+
+コメント(その２)の上
+{% comment %}
+ここはコメントなので表示されることはありません。
+HTMLにも出力されません。
+{% endcomment %}
+コメント(その２)の下
+
 
 # 参照
+
 [Markdown (kramdown) のリファレンス](http://mae0003.github.io/markdown/2015/06/21/kramdownRefference)
 
 # 見出し
