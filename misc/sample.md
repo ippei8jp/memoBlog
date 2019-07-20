@@ -5,6 +5,9 @@ tags: ["サンプル", "テスト"]
 excerpt: ここには抜粋を書きます。
 layout: default
 ---
+
+このページのソース：<https://raw.githubusercontent.com/ippei8jp/memoBlog/master/misc/sample.md>
+
 # 見出し1
 
 ## 見出し2
