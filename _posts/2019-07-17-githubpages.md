@@ -46,12 +46,20 @@ bundle install --path gems
 
 このとき、`_config.yml`の以下の部分にモジュールのインストール先(上の例では`gems`)を追加しておく(追加しないとjekyll実行時にエラーになる)。
 
+{% include filename.html filename="_config.yml" %}
 ```
+・・・
 exclude: [server.sh, Gemfile, Gemfile.lock]
+・・・
 ```
-            ↓
+
+<div style="text-align: center;">↓</div>
+
+{% include filename.html filename="_config.yml" %}
 ```
+・・・
 exclude: [gems, server.sh, Gemfile, Gemfile.lock]
+・・・
 ```
 
 # 実行
