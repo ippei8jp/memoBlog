@@ -4,7 +4,7 @@ plugins:
   - jekyll-github-metadata
 
 source: .
-exclude: [server.sh, Gemfile, Gemfile.lock]
+exclude: [gems, Gemfile, Gemfile.lock, compile.sh, server.sh, compile.cmd, server.cmd]
 
 # これを書いておくとsite.github変数のリポジトリ関連の値を上書きできる
 # repository:     ippei8jp/BlogTest333
