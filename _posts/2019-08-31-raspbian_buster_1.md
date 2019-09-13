@@ -292,7 +292,7 @@ sambaのインストールと設定
 
 ```
 sudo apt install samba
-sudo smbpasswd -a <ユーザ名>
+sudo smbpasswd -a `whoami`
     パスワードを設定
 ```
 
