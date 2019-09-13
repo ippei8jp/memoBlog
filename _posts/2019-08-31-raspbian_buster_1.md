@@ -284,9 +284,8 @@ XKBOPTIONS="ctrl:swapcaps"      # CapsLock <-> Ctrl
 まずはワークディレクトリの作成
 ```
 sudo mkdir /work
-sudo chown <ユーザ名>:<ユーザ名> /work
 sudo mkdir /proj
-sudo chown <ユーザ名>:<ユーザ名> /proj
+sudo chown `whoami`:`whoami` /work /proj
 ```
 
 sambaのインストールと設定
