@@ -92,7 +92,9 @@ sudo ifconfig wlan0 up
 sleep 3
 
 echo re-get IP address...
-dhclient -r
+sudo dhcpcd -k
+sleep 3
+sudo dhcpcd -n
 sleep 15
 
 echo DONE!!
