@@ -297,5 +297,129 @@ sudo service smbd reload
 sudo service smbd restart
 ```
 
+
+# HDMIコンソール用日本語入力＆表示環境構築
+
+デフォルトのままだと、HDMIコンソールは日本語の入力はおろか、表示もできない。  
+そこで、日本語入力＆表示環境を整備する。  
+HDMIコンソールで日本語を使わないなら本章は設定不要。  
+
+## フォントのインストール
+
+フォントをインストールしないと表示できないのでまずはフォントのインストール。  
+
+```bash
+sudo apt install fonts-noto-cjk 
+```
+
+## ターミナルエミュレータのインストール
+
+デフォルトのターミナルは日本語を表示できないので、日本語対応のターミナルエミュレータを使う。  
+ネット上にはjfbtermを使用する記事が多いが、jfbtermはイマイチらしいのでfbtermを使う。  
+
+```bash
+sudo apt install fbterm
+```
+
+## 日本語変換システムのインストール
+
+日本語入力のためのプログラム。Windowsで言うところのMS-IMEやATOKに相当するもの。  
+
+```bash
+sudo apt install uim-fep uim-anthy
+```
+
+## fbtermの設定
+
+fbtermの設定は、 ~/.fbtermrc で行う。  
+**HDMIコンソールから** fbtermを一度起動すると ~/.fbtermrc ができるので、設定変更するときはこれを書き換える。  
+例えばこんな感じ。  
+
+```bash
+font-size=18
+```
+
+fbtermを起動したときに``[input] can’t change kernel keymap table ～``と表示されるときは以下を実行すると良い。(表示されるだけで実害はないらしい)
+
+
+
+```bash
+sudo setcap 'cap_sys_tty_config+ep' /usr/bin/fbterm
+```
+
+または、以下でも良い。  
+
+```bash
+sudo chmod u+s /usr/bin/fbterm
+```
+
+
+参考： <https://qiita.com/mtomoaki_96kg/items/e5a946fd38f7318d3758?fbclid=IwAR2d8ekXNiD9cqvpqycdfinDZMHZ0OcTmaETTsci1UA9T-aDtc3LvfOiaa0>
+
+
+
+## uim(日本語変換システム)の設定
+
+uimでCTRL+SPACEでFEPの切り替えの設定。
+~/.uim に以下の内容を記述(なければ新規作成)。  
+参考： <https://qiita.com/tukiyo3/items/376e3a2895a71ff9bfc7>   
+
+```
+(define default-im-name 'anthy)
+(define-key generic-on-key? '("<Control> " "`"))
+(define-key generic-off-key? '("<Control> " "`"))
+```
+
+>[!NOTE]
+各行のシングルクォーテーションは1個だけ。文字列として区切っている訳ではない。  
+余計なシングルクォーテーションを入れると動かなくなるので注意！！
+
+
+
+## 起動時にfbtermを起動する
+
+起動時にfbtermを起動するには以下を ~/.profile 、 ~/.bashrc に追加
+
+### ~/.profile
+
+最後に以下の内容を追加
+
+```bash
+if [ "$TERM" = "linux" ]
+then
+#   FBTERM=1 exec fbterm -- uim-fep
+   FBTERM=1 fbterm -- uim-fep
+   exit
+fi
+```
+
+本当はコメントアウトされてる方の exec を使うようにしないといけないが、現状うまく動かないらしい。  
+(Strechでは動いていたと思う)  
+仕方ないので、fbtermをbashの子プロセスとして実行するようにしてある。  
+これだとうまく動いている(当然、メモリ消費量は増えるけど)。  
+
+また、ログアウトの際にCTRL+Dを2回入力しないといけなくなる(fbtermからのexitとbashからのexit)のを回避するため、 fbterm終了時にexitコマンドを実行している。  
+
+
+
+### ~/.bashrc
+
+最後に(でなくてもいいけど)、以下を追加
+
+```bash
+case "$TERM" in
+    linux)
+        [ -n "$FBTERM" ] && export TERM=fbterm
+        ;;
+    fbterm)
+        # 何もしない
+        ;;
+    *)
+        # 何もしない
+        ;;
+esac
+```
+
+
 # ま、こんな感じかな。
 
