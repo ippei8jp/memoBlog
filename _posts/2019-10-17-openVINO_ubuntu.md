@@ -21,7 +21,7 @@ caffeモデルなどをopenVINOへ変換するには、フルパッケージが�
 ```bash
 tar xzvf /Share/l_openvino_toolkit_p_2019.3.334.tgz 
 cd l_openvino_toolkit_p_2019.3.334
-sudo ./install_GUI.sh 
+sudo -E ./install_GUI.sh 
 ```
 
 nextをクリックしていけば大丈夫(Agreeするとこはあるけど)。  
@@ -65,10 +65,21 @@ source /opt/intel/openvino/bin/setupvars.sh
 必要なpipモジュールをインストールするらしい。  
 必要なものだけインストールすることもできるけど、一括でインストールしといた方が手間がかからないでしょう。  
 
+pyenvを使ってると、`sudo pip3`されると、systemのpip3が動いてしまい、pyenv環境にモジュールがインストールされない。  
+スクリプトの中で必要なコマンドだけ実行する(随分スッキリしちゃったなぁ)。
+
 ```bash
-cd /opt/intel/openvino/deployment_tools/model_optimizer/install_prerequisites
-sudo ./install_prerequisites.sh
+pip install -r /opt/intel/openvino/deployment_tools/model_optimizer/requirements.txt
 ```
+
+バージョン不一致とか言われたら、適宜バージョン合わせてアップグレードorダウングレードしてちょ。  
+
+> [!NOTE]
+> オリジナルの方法はこちら
+> ```bash
+> cd /opt/intel/openvino/deployment_tools/model_optimizer/install_prerequisites
+> sudo -E ./install_prerequisites.sh
+> ```
 
 ## 「Run the Verification Scripts to Verify Installation」とな？
 
@@ -77,6 +88,12 @@ sudo ./install_prerequisites.sh
 
 build前に``apt install`` と ``pip install``が走る。
 
+こっちもpyenv使ってるとpipで悲しいことになるので、先にpipだけ実行しておく。  
+スクリプト側でもpipが走ってsystemのモジュールが追加されるが、悪影響はないと思うので、そのままにしておく。  
+
+```bash
+pip install -r /opt/intel/openvino/deployment_tools/open_model_zoo/tools/downloader/requirements.in 
+```
 
 ```bash
 cd /opt/intel/openvino/deployment_tools/demo
