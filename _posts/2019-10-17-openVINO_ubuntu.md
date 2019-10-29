@@ -18,6 +18,9 @@ caffeモデルなどをopenVINOへ変換するには、フルパッケージが�
 
 ダウンロードしたら、てきとーなところに展開して、インストーラを実行する。  
 
+> [!NOTE]
+> 2910.10 「2019 R3.1」がリリースされた。ファイル名は「l_openvino_toolkit_p_2019.3.376.tgz」 
+
 ```bash
 tar xzvf /Share/l_openvino_toolkit_p_2019.3.334.tgz 
 cd l_openvino_toolkit_p_2019.3.334
@@ -28,7 +31,7 @@ nextをクリックしていけば大丈夫(Agreeするとこはあるけど)。
 あとで色々インストールしろと言われるけど、あとでやるので無視して大丈夫  
 ・・・・しばらく待つ・・・・  
 いったんFinishするとブラウザが表示される  
-<https://docs.openvinotoolkit.org/2019_R2/_docs_install_guides_installing_openvino_linux.html#install-external-dependencies>
+<https://docs.openvinotoolkit.org/latest/_docs_install_guides_installing_openvino_linux.html#install-external-dependencies>
 
 # インストール後半 ＆ 動作確認
 
@@ -73,6 +76,48 @@ pip install -r /opt/intel/openvino/deployment_tools/model_optimizer/requirements
 ```
 
 バージョン不一致とか言われたら、適宜バージョン合わせてアップグレードorダウングレードしてちょ。  
+
+> [!NOTE]
+> setuptoolsは``pip install -U setuptools``でOKなはず。  
+> numpyは``mxnet 1.3.1 has requirement numpy<1.15.0,>=1.8.2, but you'll have numpy 1.17.3 which is incompatible.``と言われるのだけど、tensorflow 1.15.0だとnumpy 1.16.0以上を要求する。  
+> とりあえず、tenssorflowを1.13.1にしてnumpyを1.14.6にしてみて様子見。  
+> 現状のバージョン一覧は以下。これを``requirements.txt``として保存し、``pip install -r requirements.txt``するとこのバージョンでそろえてくれるはず。  
+>   
+> ```
+> absl-py==0.8.1
+> astor==0.8.0
+> certifi==2019.9.11
+> chardet==3.0.4
+> decorator==4.4.0
+> defusedxml==0.6.0
+> gast==0.2.2
+> google-pasta==0.1.7
+> graphviz==0.8.4
+> grpcio==1.24.3
+> h5py==2.10.0
+> idna==2.8
+> Keras-Applications==1.0.8
+> Keras-Preprocessing==1.1.0
+> Markdown==3.1.1
+> mock==3.0.5
+> mxnet==1.3.1
+> networkx==2.3
+> numpy==1.14.6
+> onnx==1.6.0
+> opt-einsum==3.1.0
+> pipdeptree==0.13.2
+> protobuf==3.6.1
+> requests==2.22.0
+> six==1.12.0
+> tensorboard==1.13.1
+> tensorflow==1.13.1
+> tensorflow-estimator==1.13.0
+> termcolor==1.1.0
+> typing-extensions==3.7.4
+> urllib3==1.25.6
+> Werkzeug==0.16.0
+> wrapt==1.11.2
+> ```
 
 > [!NOTE]
 > オリジナルの方法はこちら
