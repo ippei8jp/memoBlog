@@ -193,6 +193,7 @@ make object_detection_demo_yolov3_async
 
 実行ファイルは``./armv7l/Release/``に作成される。  
 入力ファイル(-i オプション)はフルパスで指定すること。相対パスだとファイルが見つからないと怒られる。  
+※ 下のパッチを当てると相対パスでも大丈夫になる。  
 
 ```bash
 ./armv7l/Release/object_detection_demo_yolov3_async \
@@ -204,4 +205,46 @@ make object_detection_demo_yolov3_async
 なぜか-saveオプションが効かない。。。  
 
 
+## 入力ファイル名に相対パスを使用できるようにするためのパッチ
+
+入力ファイル名をrealpath()で絶対パスに変換して使用することで対応。  
+
+```diff
+--- main.cpp.1	2019-10-31 14:23:11.411692408 +0900
++++ main.cpp	2019-11-01 11:25:29.720856218 +0900
+@@ -30,6 +30,9 @@
+ #include <ext_list.hpp>
+ #endif
+ 
++#include <limits.h>
++#include <unistd.h>
++
+ using namespace InferenceEngine;
+ 
+ bool ParseAndCheckCommandLine(int argc, char *argv[]) {
+@@ -180,7 +183,23 @@
+ 
+         slog::info << "Reading input" << slog::endl;
+         cv::VideoCapture cap;
+-        if (!((FLAGS_i == "cam") ? cap.open(0) : cap.open(FLAGS_i.c_str()))) {
++
++        bool open_status;
++        if (FLAGS_i == "cam") {
++            open_status = cap.open(0);
++        }
++        else {
++            std::string input_filename;
++            char input_filename_char[PATH_MAX+1];
++            if (!realpath(FLAGS_i.c_str(), input_filename_char)) {
++                throw std::logic_error("Cannot get realpath");
++            }
++            input_filename = input_filename_char;
++            slog::info << "input filename :" + input_filename << slog::endl;
++            open_status = cap.open(input_filename.c_str());
++
++        }
++        if (!open_status) {
+             throw std::logic_error("Cannot open input file or camera: " + FLAGS_i);
+         }
+```
 
