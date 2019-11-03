@@ -20,47 +20,10 @@ excerpt: tinyYOLOのC++版デモプログラムのbuildと実行
 ソース修正に備えて、ソースをコピっておく(オーナーも変更)と何かと便利。  
 
 ```bash
-mkdir demo && cd demo/
+mkdir -p /work/NCS2/c++/openvino_demo && cd /work/NCS2/c++/openvino_demo
 cp -r /opt/intel/openvino/deployment_tools/open_model_zoo/demos .
 sudo chown -R `whoami`:`whoami` demos/
 ```
-
-## モデルデータ
-
-[openVINO でtinyYOLO]({{ site.baseurl }}/2019/10/30/openVINO_YOLO.html) 
-で作成したモデルデータをそのまま使用する。  
-ラベルデータファイルのファイル名はモデルデータのxmlファイルの拡張子を``.labels``に変更したものに固定なので、
-ラベルデータのコピー時にファイル名を変更しておく。  
-
-```bash
-cp -r ../object_detection_demo_yolov3_async/FP16 .
-cp -r ../object_detection_demo_yolov3_async/coco.names FP16/yolo_v3_tiny.labels
-```
-
-## buildディレクトリの作成とbuild
-
-cmakeの実行とbuild  
-
-```bash
-mkdir build && cd build/
-cmake -DCMAKE_BUILD_TYPE=Release ../demos/
-make object_detection_demo_yolov3_async
-```
-
-ちょっと時間がかかる。   
-
-## 実行
-
-実行ファイルは``./intel64/Release/``に作成される。  
-
-```bash
-./intel64/Release/object_detection_demo_yolov3_async \
--m ../FP16/yolo_v3_tiny.xml \
--l /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_avx2.so \
--i ../../data/testvideo3.mp4
-```
-
--save オプションを指定すると、認識結果の動画をresult.mp4(ファイル名は固定)に保存する。  
 
 ## ソース修正
 
@@ -170,6 +133,39 @@ make object_detection_demo_yolov3_async
 
 ```
 
+## buildディレクトリの作成とbuild
+
+cmakeの実行とbuild  
+
+```bash
+mkdir build && cd build/
+cmake -DCMAKE_BUILD_TYPE=Release ../demos/
+make object_detection_demo_yolov3_async
+```
+
+ちょっと時間がかかる。   
+
+## モデルデータ
+
+[openVINO でtinyYOLO]({{ site.baseurl }}/2019/10/30/openVINO_YOLO.html) 
+で作成したモデルデータをそのまま使用する。  
+ラベルデータファイルのファイル名はモデルデータのxmlファイルの拡張子を``.labels``に変更したものに固定だが、モデルデータ作成時にコピー済み。  
+
+## 実行
+
+実行ファイルは``./intel64/Release/``に作成される。  
+
+```bash
+models_dir=/work/NCS2/openvino_models/FP16
+./intel64/Release/object_detection_demo_yolov3_async \
+-m ${models_dir}/yolo_v3_tiny.xml \
+-l /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_avx2.so \
+-i ../../../data/testvideo3.mp4
+```
+
+-save オプションを指定すると、認識結果の動画をresult.mp4(ファイル名は固定)に保存する。  
+
+
 # RaspberryPi3B+  ＋ NCStickでデモを動かす
 
 デモプログラムはRasspberryPiでも動作させることができる。  
@@ -179,11 +175,12 @@ make object_detection_demo_yolov3_async
 [Intel NCStick2用動作環境の構築]({{ site.baseurl }}/2019/09/01/NCS_1.html) 
 にしたがって環境構築したRaspberryPiを使用。  
 
-ubuntuで作成した demos ディレクトリとFP16ディレクトリをまるごとRaspberryPiにコピーする。  
+ubuntuで作成した /work/NCS2/c++/openvino_demo/demos ディレクトリと/work/NCS2/openvino_models ディレクトリをまるごとRaspberryPiにコピーする。  
 
 ## buildディレクトリの作成とbuild
 
 ```bash
+cd /work/NCS2/c++/openvino_demo
 mkdir build && cd build/
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS="-march=armv7-a -Wno-psabi" ../demos/
 make object_detection_demo_yolov3_async
@@ -196,10 +193,11 @@ make object_detection_demo_yolov3_async
 ※ 下のパッチを当てると相対パスでも大丈夫になる。  
 
 ```bash
+models_dir=/work/NCS2/openvino_models/FP16
 ./armv7l/Release/object_detection_demo_yolov3_async \
--m ../FP16/yolo_v3_tiny.xml \
+-m ${models_dir}/yolo_v3_tiny.xml \
 -d MYRIAD \
--i /work/YOLO/data/testvideo3.mp4 
+-i /work/NCS2/data/testvideo3.mp4 
 ```
 
 なぜか-saveオプションが効かない。。。  

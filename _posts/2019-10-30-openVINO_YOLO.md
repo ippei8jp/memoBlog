@@ -23,6 +23,7 @@ pythonはpyenv環境で3.7.4を使用
 ## darknet → tensorflow 変換のためのプログラム取得
 
 ```bash
+cd /work/NCS2
 git clone https://github.com/mystic123/tensorflow-yolo-v3.git
 cd tensorflow-yolo-v3/
 git checkout ed60b90
@@ -42,44 +43,19 @@ python convert_weights_pb.py --class_names coco.names --data_format NHWC --weigh
 mv frozen_darknet_yolov3_model.pb yolo_v3_tiny.pb
 ```
 
-## デモプログラムをコピー
-
-モデルデータをデモプログラムと同じところに置いておきたいので、ここでデモプログラムをコピっておく。  
-
-```bash
-cd ..
-cp -r /opt/intel/openvino/deployment_tools/open_model_zoo/demos/python_demos/object_detection_demo_yolov3_async .
-cd object_detection_demo_yolov3_async/
-```
-
-## 上で作ったpbファイルをコピー
-
-変換処理で直接上のディレクトリを参照すれば良いという説も...  
-
-```bash
-cp ../tensorflow-yolo-v3/yolo_v3_tiny.pb .
-```
-
-## ラベルデータもコピー
-
-pbファイルにはラベルデータが入っているはずだが、この後の変換でラベルデータは欠落するらしい。  
-
-```bash
-cp ../tensorflow-yolo-v3/coco.names .
-```
-
 ## モデルデータを変換
 
 ```bash
+models_dir=/work/NCS2/openvino_models/FP16
 python /opt/intel/openvino/deployment_tools/model_optimizer/mo_tf.py \
---input_model ./yolo_v3_tiny.pb \
+--input_model yolo_v3_tiny.pb \
 --tensorflow_use_custom_operations_config /opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/yolo_v3_tiny.json \
---output_dir FP16 \
+--output_dir ${models_dir} \
 --data_type FP16 \
 --batch 1
 ```
 
-FP16ディレクトリに yolo_v3_tiny.bin yolo_v3_tiny.mapping yolo_v3_tiny.xml の3つが出来る
+/work/NCS2/openvino_models/FP16ディレクトリに yolo_v3_tiny.bin yolo_v3_tiny.mapping yolo_v3_tiny.xml の3つが出来る
 
 > [!NOTE]
 > FP32で計算する場合はこちら  
@@ -87,13 +63,31 @@ FP16ディレクトリに yolo_v3_tiny.bin yolo_v3_tiny.mapping yolo_v3_tiny.xml
 > そんなに認識精度が変わるわけでもなさそうだし。  
 > 
 > ```bash
+> models_dir=/work/NCS2/openvino_models/FP32
 > python /opt/intel/openvino/deployment_tools/model_optimizer/mo_tf.py \
-> --input_model ./yolo_v3_tiny.pb \
+> --input_model yolo_v3_tiny.pb \
 > --tensorflow_use_custom_operations_config /opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/yolo_v3_tiny.json \
-> --output_dir FP32 \
+> --output_dir ${models_dir} \
 > --data_type FP32 \
 > --batch 1
 > ```
+
+## ラベルデータもコピー
+
+pbファイルにはラベルデータが入っているはずだが、この後の変換でラベルデータは欠落するらしい。  
+後のプログラムのためにファイル名変更しておく  
+
+```bash
+cp coco.names ${models_dir}/yolo_v3_tiny.labels
+```
+
+## デモプログラムをコピー
+
+```bash
+cd ..
+cp -r /opt/intel/openvino/deployment_tools/open_model_zoo/demos/python_demos/object_detection_demo_yolov3_async .
+cd object_detection_demo_yolov3_async/
+```
 
 # デモ実行
 
@@ -174,6 +168,12 @@ FP16ディレクトリに yolo_v3_tiny.bin yolo_v3_tiny.mapping yolo_v3_tiny.xml
          cv2.imshow("DetectionResults", frame)
 ```
 
+上のパッチ内容をa.patchとして保存したとして、以下のコマンドを実行
+
+```bash
+patch object_detection_demo_yolov3_async.py a.patch 
+
+```
 
 ## 静止画の場合
 
@@ -181,11 +181,12 @@ FP16ディレクトリに yolo_v3_tiny.bin yolo_v3_tiny.mapping yolo_v3_tiny.xml
 dataディレクトリに認識用の画像データを用意してある(以下同じ)。
 
 ```bash
+models_dir=/work/NCS2/openvino_models/FP16
 python object_detection_demo_yolov3_async.py \
---model FP16/yolo_v3_tiny.xml \
+--model ${models_dir}/yolo_v3_tiny.xml \
 --cpu_extension /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_avx2.so \
---labels coco.names \
---input data/000004.jpg
+--labels ${models_dir}/yolo_v3_tiny.labels \
+--input ../../data/000004.jpg
 ```
 
 ## 動画の場合
@@ -195,11 +196,12 @@ python object_detection_demo_yolov3_async.py \
 カメラからの入力を使用する場合は``--input cam``とするらしいが、カメラないので未確認。  
 
 ```bash
+models_dir=/work/NCS2/openvino_models/FP16
 python object_detection_demo_yolov3_async.py \
---model FP16/yolo_v3_tiny.xml \
+--model ${models_dir}/yolo_v3_tiny.xml \
 --cpu_extension /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libcpu_extension_avx2.so \
---labels coco.names \
---input data/testvideo3.mp4
+--labels ${models_dir}/yolo_v3_tiny.labels \
+--input ../../data/testvideo3.mp4
 ```
 
 # RaspberryPi3B+  ＋ NCStickでデモを動かす
@@ -210,7 +212,6 @@ python object_detection_demo_yolov3_async.py \
 
 
 RaspberryPi用はopenVINO 2019R3のまま(2019.10.29現在、R3.1はリリースされていない)だけど、問題なし。
-
 
 ubuntuで作成した object_detection_demo_yolov3_async ディレクトリをまるごとRaspberryPiにコピーする。  
 
@@ -223,9 +224,9 @@ ubuntuで作成した object_detection_demo_yolov3_async ディレクトリを�
 ```bash
 python object_detection_demo_yolov3_async.py \
 --device MYRIAD \
---model FP16/yolo_v3_tiny.xml \
---labels coco.names \
---input data/000004.jpg
+--model ${models_dir}/yolo_v3_tiny.xml \
+--labels ${models_dir}/yolo_v3_tiny.labels \
+--input ../../data/000004.jpg
 ```
 
 
@@ -237,9 +238,9 @@ python object_detection_demo_yolov3_async.py \
 ```bash
 python object_detection_demo_yolov3_async.py \
 --device MYRIAD \
---model FP16/yolo_v3_tiny.xml \
---labels coco.names \
--i data/testvideo3.mp4
+--model ${models_dir}/yolo_v3_tiny.xml \
+--labels ${models_dir}/yolo_v3_tiny.labels \
+--input ../../data/testvideo3.mp4
 ```
 
 
@@ -298,11 +299,4 @@ object_detection_demo_yolov3_async.py に以下の変更を加えることで、
 +
      cv2.destroyAllWindows()
 ```
-
-
-
-
-
-
-
 
