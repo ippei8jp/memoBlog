@@ -25,6 +25,7 @@
     {% for item in site.tags %}
       {% assign tag_keys = tag_keys | push: item[0] %}
     {% endfor %}
+    {% assign tag_keys = tag_keys | sort %}
 
     <nav>
       <p style="text-align: left;">
