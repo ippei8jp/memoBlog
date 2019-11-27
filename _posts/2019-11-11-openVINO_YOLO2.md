@@ -1,7 +1,7 @@
 ---
 title: openVINO でYOLO(その2)
 date: 2019-11-11
-tags: ["DeepLearning", "openVINO", "ubuntu", "RaspberryPi"]
+tags: ["DeepLearning", "openVINO", "Ubuntu", "RaspberryPi"]
 excerpt: openVINOのYOLOのプログラムをちょこっと改変
 ---
 

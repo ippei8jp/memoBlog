@@ -1,7 +1,7 @@
 ---
 title: openVINO でtinyYOLO
 date: 2019-10-30
-tags: ["DeepLearning", "openVINO", "ubuntu", "RaspberryPi"]
+tags: ["DeepLearning", "openVINO", "Ubuntu", "RaspberryPi"]
 excerpt: darknetのモデルデータをopenVINOのモデルデータに変換し、tinyYOLOで画像認識を行う
 ---
 

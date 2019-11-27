@@ -1,7 +1,7 @@
 ---
 title: openVINO でSSD
 date: 2019-11-10
-tags: ["DeepLearning", "openVINO", "ubuntu", "RaspberryPi"]
+tags: ["DeepLearning", "openVINO", "Ubuntu", "RaspberryPi"]
 excerpt: openVINOのSSDのサンプルプログラムを動かしてみる
 ---
 

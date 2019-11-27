@@ -1,7 +1,7 @@
 ---
 title: openVINO でtinyYOLO(C++版)
 date: 2019-10-31
-tags: ["DeepLearning", "openVINO", "ubuntu", "RaspberryPi"]
+tags: ["DeepLearning", "openVINO", "Ubuntu", "RaspberryPi"]
 excerpt: tinyYOLOのC++版デモプログラムのbuildと実行
 ---
 

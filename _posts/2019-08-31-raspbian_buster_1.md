@@ -1,7 +1,7 @@
 ---
 title: Raspbian Busterのインストール
 date: 2019-08-31
-tags: ["RaspberryPi"]
+tags: ["RaspberryPi","setup"]
 excerpt: Raspbian Buster with desktopのインストールと初期設定。
 layout: default
 ---

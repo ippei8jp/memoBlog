@@ -1,7 +1,7 @@
 ---
 title: openVINO フルパッケージをubuntuにインストール
 date: 2019-10-17
-tags: ["DeepLearning", "openVINO", "ubuntu"]
+tags: ["DeepLearning", "openVINO", "Ubuntu"]
 excerpt: openVINO フルパッケージをubuntuにインストールする
 ---
 
