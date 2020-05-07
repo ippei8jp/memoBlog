@@ -26,6 +26,8 @@ WITH DEVKIT を選んでおく方が良いらしい。
 gem install bundler
 ```
 
+
+
 ## 準備
 
 このページの一番下の中央にある、「 maintained by ippei8jp/memoBlog」のリンクからリポジトリをクローンする。  
@@ -39,6 +41,13 @@ bundle install --path gems
 ```
 
 あるいは、`install.cmd`に登録してあるので、そっちを実行しても可。
+
+>[!NOTE]
+> Rubyのバージョンを変更したり、ディレクトリを移動した場合はgemsディレクトリを削除してから
+```
+bundle install --path gems
+```
+>を実行する
 
 windows対応にあたって、リポジトリの _config.yml と .gitignore は対処済み。
 
