@@ -7,7 +7,7 @@ excerpt: openVINO フルパッケージをubuntuにインストールする(Ver.
 
 
 
-以前、[openVINO フルパッケージをubuntuにインストール](https://ippei8jp.github.io/memoBlog/2019/10/17/openVINO_ubuntu.html)で
+以前、[openVINO フルパッケージをubuntuにインストール]({{ site.baseurl }}/2019/10/17/openVINO_ubuntu.html)で
 ubuntuへのインストール手順を書いたが、今読み返すと結構分かりにくかったので改訂版を書いとく。  
 今回はNCS2をubuntuで使えるようにしたので、その手順も追加。  
 ついでに、今日(2020/06/16)現在の最新版Ver.2020.3での手順確認したので、反映しておく。  
