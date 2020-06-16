@@ -5,6 +5,9 @@ tags: ["DeepLearning", "openVINO", "Ubuntu"]
 excerpt: openVINO フルパッケージをubuntuにインストールする
 ---
 
+改訂版はこちら→[openVINO フルパッケージをubuntuにインストール(改訂版)]({{ site.baseurl }}/2020/06/16/openVINO_ubuntu_2.html)
+
+
 caffeモデルなどをopenVINOへ変換するには、フルパッケージが必要らしい。  
 でもって、フルパッケージはRaspberryPiでは使用できなくて、WindowsやLinux、macOSが必要。  
 ということで、openVINO フルパッケージをubuntu 18.04にインストールする。   
