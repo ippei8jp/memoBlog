@@ -211,3 +211,107 @@ git pull
 git diff «比較元ブランチ名» «比較先ブランチ名» [ファイル名 | ディレクトリ名]
 ```
 
+# 端末(ターミナル)ウィンドウの起動方法によって初期処理を変更する
+## 端末(ターミナル)ウィンドウの環境変数を設定してbashを起動するプロファイルを作成する
+
+- まず現在の設定で端末を開く  
+- メニューの<span style="border: 1px solid;">編集</span> → <span style="border: 1px solid;">Preferences</span> を選択  
+- 左側でベースにするプロファイルの右端の▼をクリックして<span style="border: 1px solid;">Clone...</span>を選択  
+- 名前を入力(例えばopenVINO)して<span style="border: 1px solid;">Clone</span> をクリック
+- 作成したプロファイルをクリックして右側上のタブで<span style="border: 1px solid;">コマンド</span>を選択  
+- <span style="border: 1px solid;">□ SHELLの代わりにカスタム・コマンドを実行する(N)</span> にチェックを入れる  
+- <span style="border: 1px solid;">カスタムコマンド</span>に``/usr/bin/env myUseSetting=OPENVINO bash``と入力  
+  ここで、``myUseSetting=OPENVINO`` が設定したい環境変数
+- その他のタブはお好みで変更 
+- <span style="border: 1px solid;">閉じる</span>をクリック  
+
+## 環境変数によって.bashrcの処理を変更する
+
+``~/.bashrc`` に環境変数に応じた処理を追加  
+
+```bash
+if [[ ${«設定した環境変数»} = "«期待する文字列»" ]]; then
+    «環境変数に応じた処理»
+fi
+```
+
+たとえば、こんな感じ。  
+```bash
+if [[ ${myUseSetting} = "OPENVINO" ]]; then
+    source /opt/intel/openvino/bin/setupvars.sh
+    echo "========== bash for openINO =========="
+fi
+```
+
+試してみる。  
+以下のコマンドを実行。  
+```bash
+gnome-terminal --profile=«作成したプロファイル名»
+```
+
+たとえば、こんな感じ。  
+```bash
+gnome-terminal --profile=openVINO
+```
+
+起動した端末(ターミナル)ウィンドウで追加した初期処理が実行されていることを確認。  
+通常起動の端末(ターミナル)ウィンドウで追加した初期処理が実行されていないことも確認した方がいいかも。  
+
+## キーボードショートカットで作成したプロファイルの端末(ターミナル)を起動する
+
+- 「設定」を開き、左側で<span style="border: 1px solid;">デバイス</span> →<span style="border: 1px solid;">キーボード</span>と選択する  
+- <span style="border: 1px solid;">名前</span>に適当な名前を設定  
+- <span style="border: 1px solid;">コマンド</span>に先ほど試したコマンドを入力  
+- <span style="border: 1px solid;">ショートカットの設定...</span>をクリックし、設定したいキーの組み合わせを押す  
+  - 既に設定済みのキーの組み合わせは使用できない  
+- 右上の<span style="border: 1px solid;">追加</span>をクリックして完了  
+
+デスクトップで設定したキーの組み合わせを押して起動することを確認
+
+## メニューに作成したプロファイルの端末(ターミナル)を起動するアイコンを追加する
+
+以下の手順で新しい``.desktop``ファイルを作成すればよい。  
+
+- 元になる``desktop``ファイルから新しい``desktop``ファイルを作成  
+```bash
+sudo cp gnome-terminal.desktop «新しいdesktopファイル»
+```
+
+- 新しい``desktop``ファイルの設定を変更する
+  - ``Name``に適当な名称(この名称で表示されるので、分かりやすい名前で)を入力  
+  - ``Exec``に前に試したコマンドを入力。  
+    例えば、こんな感じ。  
+    ```diff
+    --- gnome-terminal.desktop	2018-05-30 22:03:45.000000000 +0900
+    +++ openvino.desktop	2020-06-17 12:26:37.403276823 +0900
+    @@ -1,9 +1,9 @@
+    [Desktop Entry]
+    -Name=Terminal
+    +Name=bash for openVINO
+    Comment=Use the command line
+    Keywords=shell;prompt;command;commandline;cmd;
+    TryExec=gnome-terminal
+    -Exec=gnome-terminal
+    +Exec=gnome-terminal --profile=openVINO
+    Icon=utilities-terminal
+    Type=Application
+    X-GNOME-DocPath=gnome-terminal/index.html
+    ```
+- アクティビティで``Name``で設定した名前を検索すればアイコンが出てくるのでクリックして起動  
+
+
+ちなみに、作成したアイコンをデスクトップに置くことも可能(その他の物でもできるけど)  
+
+- 配置したい``desktop``ファイルを``~/デスクトップ``ディレクトリにコピーして実行属性を付ける
+```bash
+cp /usr/share/applications/openvino.desktop ~/デスクトップ/
+chmod +x ~/デスクトップ/openvino.desktop 
+```
+  - 実行属性を付けないと以下のダイアログで<span style="border: 1px solid;">キャンセル</span>しか選べないので注意  
+- デスクトップ上のアイコンをダブルクリック
+  - <span style="border: 1px solid;">信用できないアプリケーションのランチャー</span>ダイアログが出るので、  
+  - <span style="border: 1px solid;">信頼して起動</span>をクリック  
+  - (2回目以降はダブルクリックだけで起動できる)
+
+
+
