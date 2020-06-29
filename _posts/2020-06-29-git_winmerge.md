@@ -1,0 +1,42 @@
+---
+title: git の差分比較ツールにWinMergeを使用する
+date: 2020-06-29
+tags: ["Windows","git"]
+excerpt: git の差分比較ツールに WinMerge を使用する方法
+---
+
+# git の差分比較ツールに WinMerge を使用する方法
+
+Windows限定だが、git の差分比較ツールに WinMerge を使用する方法のメモ  
+参考： [git の差分比較・マージを WinMerge で行う](https://qiita.com/kobake@github/items/fb317b4fdacad718a4b2?fbclid=IwAR1eO6ENMKDeeY3PmGJWrKLf_n1rgC8NVPBF60xKMiG02yAFgCFS6ceC7IE)  
+↑参考というよりパクリだが(^^ゞ
+
+git の差分比較の ``git diff`` で見ると見難いので、WinmMergeを使えるようにしてみた。  
+普段はVS Code 使ってるけど...   
+
+
+手順は、 ``C:\Users\〇〇\.gitconfig`` に以下を追記するだけ。
+
+```
+[diff]
+    tool = WinMerge
+[difftool "WinMerge"]
+    path = C:/Program Files/WinMerge/WinMergeU.exe
+    cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -f \"*.*\" -e -u -r \"$LOCAL\" \"$REMOTE\"
+[merge]
+    tool = WinMerge
+[mergetool "WinMerge"]
+    path = C:/Program Files/WinMerge/WinMergeU.exe
+    cmd = \"C:/Program Files/WinMerge/WinMergeU.exe\" -e -u \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[alias]
+    windiff = difftool -y -d -t WinMerge
+    winmerge = mergetool -y -t WinMerge
+```
+
+差分比較したいときに ``git windiff`` と入力すれば良い。  
+
+差分はファイル書き換えても自動的にアップデートされなので、都度``git windiff`` する必要がある。  
+(あくまでスナップショットでの比較を表示してるだけ)  
+
+比較対象の指定とか、マージとかもできるみたいだけど、使ってないので、詳しくは↑の参考先を見てね。(^^ゞ  
+
