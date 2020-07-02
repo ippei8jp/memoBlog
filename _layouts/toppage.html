@@ -38,8 +38,24 @@
         </select>
       </p>
       <div class="outline">
-        <ul></ul>
+        <hr style="background: url(none); background-color: aqua; width: 100%; height:3px; border: none; margin:0 0 0;">
+        USEFUL <br />
+        <ul>
+          <li><a href="/2020/07/01/git_cmd.html">git クイックリファレンス</a></li>
+        </ul>
+        <hr style="background: url(none); background-color: aqua; width: 100%; height:3px; border: none; margin:0 0 0;">
+        TAG <br />
+        <ul>
+          {% for item in tag_keys %}
+            <li><a href="{{ item }}">{{ item }}</a></li>
+          {% endfor %}
+        </ul>
       </div>
+
+
+
+
+
       <p class="to_top">
         <a href="#" onClick="$('body,html').animate({scrollTop: 0                   },1500); return false;">最初</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#" onClick="$('body,html').animate({scrollTop: $(document).height()},1500); return false;">最後</a>
