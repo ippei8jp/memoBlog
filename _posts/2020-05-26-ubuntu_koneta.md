@@ -324,3 +324,9 @@ chmod +x ~/デスクトップ/openvino.desktop
 
 
 
+# カレントディレクトリ下のファイルの全角文字等を抽出する
+
+```bash
+grep -r -n -v '^[[:cntrl:][:print:]]*$' .
+```
+
