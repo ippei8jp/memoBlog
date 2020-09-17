@@ -29,3 +29,42 @@ excerpt: Windowsの小ネタ集
 - [モバイル ホットスポットでRaspberryPiをネットに接続]({{ site.baseurl }}/2019/09/12/mobilehotspot.html)
 
 
+# PC起動時にネットワークドライブの再接続に失敗する場合の自動リカバリ
+
+PCの起動時にネットワークドライブの再接続に失敗する場合、以下の手順で自動でリカバリできる。  
+手順は以下。  
+
+- ```%SystemDrive%\Scripts\MapDrives.ps1```を以下の内容で作成    
+{% include filename.html filename="c:\Scripts\MapDrives.ps1" %}
+```powershell
+$i=3
+while($True){
+    $error.clear()
+    $MappedDrives = Get-SmbMapping |where -property Status -Value Unavailable -EQ | select LocalPath,RemotePath
+    foreach( $MappedDrive in $MappedDrives)
+    {
+        try {
+            New-SmbMapping -LocalPath $MappedDrive.LocalPath -RemotePath $MappedDrive.RemotePath -Persistent $True
+        } catch {
+            Write-Host "There was an error mapping $MappedDrive.RemotePath to $MappedDrive.LocalPath"
+        }
+    }
+    $i = $i - 1
+    if($error.Count -eq 0 -Or $i -eq 0) {break}
+
+    Start-Sleep -Seconds 30
+
+}
+```
+- ```%SystemDrive%\Scripts\MapDrives.cmd```を以下の内容で作成    
+{% include filename.html filename="%SystemDrive%\Scripts\MapDrives.cmd" %}
+```powershell
+date /T > "%TEMP%\MapDrivers.txt"
+time /T >> "%TEMP%\MapDrivers.txt"
+PowerShell -Command "Set-ExecutionPolicy -Scope CurrentUser Unrestricted" >> "%TEMP%\MapDrivers.txt" 2>&1 
+PowerShell -File "%SystemDrive%\Scripts\MapDrives.ps1" >> "%TEMP%\MapDrivers.txt" 2>&1
+```
+- スタートアップフォルダに```%SystemDrive%\Scripts\MapDrives.cmd```のショートカットを置く    
+- 作成したショートカットのプロパティを開いて「ショートカット」タブの「実行時の大きさ」を「最小化」に変更しておく。    
+
+参考： [Windows 10、バージョン 1809 において、マップされたネットワークドライブの再接続に失敗する場合がある](https://support.microsoft.com/ja-jp/help/4471218/mapped-network-drive-may-fail-to-reconnect-in-windows-10-version-1809?fbclid=IwAR3FHRrLbLXn8rp_qigZW46oeAWs22x6Uqh-0Nu7psOKDA45UlOo7a9wlg0)
