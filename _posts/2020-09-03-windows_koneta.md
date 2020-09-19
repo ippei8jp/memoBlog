@@ -1,7 +1,7 @@
 ---
 title: Windows 小ネタ集
 date: 2020-09-03
-tags: ["Ubuntu"]
+tags: ["Windows"]
 excerpt: Windowsの小ネタ集
 ---
 
@@ -68,3 +68,12 @@ PowerShell -File "%SystemDrive%\Scripts\MapDrives.ps1" >> "%TEMP%\MapDrivers.txt
 - 作成したショートカットのプロパティを開いて「ショートカット」タブの「実行時の大きさ」を「最小化」に変更しておく。    
 
 参考： [Windows 10、バージョン 1809 において、マップされたネットワークドライブの再接続に失敗する場合がある](https://support.microsoft.com/ja-jp/help/4471218/mapped-network-drive-may-fail-to-reconnect-in-windows-10-version-1809?fbclid=IwAR3FHRrLbLXn8rp_qigZW46oeAWs22x6Uqh-0Nu7psOKDA45UlOo7a9wlg0)
+
+
+# ファイルをロックしているプログラムを特定する
+
+Windowsでファイル削除しようとしたら、「このファイルはロックされています」と言われてイラっとしたときに
+これを使うとイッパツ解消(と行かないこともないことはない)。
+
+[ファイルの削除を妨げているアプリを特定、ロックを解除できるアプリ「LockHunter」](https://forest.watch.impress.co.jp/docs/review/1222040.html?fbclid=IwAR133Iw2vfGX_e9fnBhm3soJ3iRdY65YOPh02tRa_IkG_ntVWAxesZuFORQ)  
+
