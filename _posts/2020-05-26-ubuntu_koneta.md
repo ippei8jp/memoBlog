@@ -38,6 +38,31 @@ apt list --installed
 apt list --installed | grep -v 自動
 ```
 
+# ファイルがどのパッケージに含まれているかを調べる方法
+
+コマンドを実行して○○が見つからないと言われて、どのパッケージをインストールすれば良いのか分からないときに。  
+
+最初に``apt-file``をインストール  
+```bash
+sudo apt install apt-file
+```
+
+実行前に以下でパッケージ情報を更新しておく。そんなに頻繁にやらなくても良い。  
+```bash
+sudo apt-file update 
+```
+
+で、以下で検索。  
+```bash
+apt-file search ○○
+```
+
+逆にパッケージに含まれるファイル一覧を取得したい場合は以下。  
+```bash
+apt-file show <パッケージ名>
+```
+
+
 # VirtualBox上のUbuntuとclipboardの共有がおかしくなったときの対処方法
 
 VirtualBox上のUbuntuでclipboardの共有の動作がおかしくなることがある。  
