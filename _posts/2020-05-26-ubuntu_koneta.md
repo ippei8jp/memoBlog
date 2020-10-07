@@ -28,6 +28,16 @@ removeとpurgeで引っかければいけるかな？
 zgrep -1 -e remove -e purge `ls -tr /var/log/apt/history.log*`
 ```
 
+> [!NOTE]
+現在インストール済みパッケージを知りたいだけなら以下でも大丈夫。  
+```bash
+apt list --installed
+```
+手動でインストールしたものだけ取得したい場合は以下(つまり、関連パッケージとしてインストールされたものを除く)。  
+```bash
+apt list --installed | grep -v 自動
+```
+
 # VirtualBox上のUbuntuとclipboardの共有がおかしくなったときの対処方法
 
 VirtualBox上のUbuntuでclipboardの共有の動作がおかしくなることがある。  
