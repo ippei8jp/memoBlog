@@ -68,7 +68,11 @@ cmake --version
 ```bash
 source /opt/intel/openvino_2021/bin/setupvars.sh
 ```
-
+> [!WARNING]
+> ``install_openvino_dependencies.sh``を実行すると、再度``apt``で``cmake``がインストールされてしまいます。  
+> openVINOのインストール完了後であれば``cmake``のバージョンが古くても大丈夫ですが、  
+> 気になるなら、再度アンインストールとシンボリックリンクの作成を行います。  
+> (実行前に``install_openvino_dependencies.sh``を編集してcmake消しておいても良いけど)
 
 ### Steps for Intel® Movidius™ Neural Compute Stick and Intel® Neural Compute Stick 2
 
