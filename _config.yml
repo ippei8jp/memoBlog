@@ -12,3 +12,5 @@ exclude: [gems, Gemfile, Gemfile.lock, compile.sh, server.sh, compile.cmd, serve
 title:          いっぺーちゃんのメモブログ
 description:    作業メモ
 show_downloads: false
+
+github: [metadata] 
