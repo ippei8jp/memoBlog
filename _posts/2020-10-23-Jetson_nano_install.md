@@ -112,7 +112,15 @@ UbuntuではmDNSが動いているので、«マシン名».localでアクセス
 > SSHやmDNSは立ち上がるまで少し時間がかかるみたいなので、  
 > 起動後数十秒程度待ってから接続した方が良い。  
 
-## シリアルコンソール/SSH接続でGUIウィンドウを表示できるようにする
+### SSH接続がタイムアウトする対策
+SSH接続したターミナルを触らずにしばらく置いておくと、タイムアウトしてクローズされてしまう。
+これを防ぐにはクライアント側からkeep-aliveパケットを定期的に送信してやれば良いらしい。
+
+Teratermの場合、「設定」→「SSH」→「ハートビート(keep-alive)」を「8」とかに設定し、保存。
+次回接続時はこの保存した設定ファイルを読み込む
+
+
+### シリアルコンソール/SSH接続でGUIウィンドウを表示できるようにする
 シリアルコンソール/SSH接続でGUIウィンドウを表示できるようにするには、
 WindowsPCなどでX-Serverを動作させておき、  
 そこに出力するようにすればよい。  
@@ -125,4 +133,89 @@ if [ "$XDG_SESSION_TYPE" != "x11" ]; then
 fi
 ```
 
+# リモートデスクトップの設定
+TigerVNC はちょっと動作があやしいので、やめておいて、Desktop Sharing(Vino)を使うことにする。  
+参考：
+- [Jetson Nanoにリモートデスクトップ(VNC)環境を用意する](https://qiita.com/iwatake2222/items/a3bd8d0527dec431ef0f#%E6%96%B9%E6%B3%952-desktop-sharingvino%E3%82%92%E4%BD%BF%E3%81%86)
+- [Getting Started with the NVIDIA Jetson Nano Developer Kit](https://www.hackster.io/news/getting-started-with-the-nvidia-jetson-nano-developer-kit-43aa7c298797) の 「Enabling Desktop Sharing」
+
+この手順はウィンドウマネージャがUnityで実行しています。 ウィンドウマネージャをUbuntuに変更していると少し手順が違うかもしれませんので、
+ウィンドウマネージャをUbuntuに変更している場合はUnityに戻してから設定してください。  
+設定完了後はUbuntuに再変更しても問題ありません。  
+
+以下手順の再掲。  
+
+- ``/usr/share/glib-2.0/schemas/org.gnome.Vino.gschema.xml``に以下のパッチを当てる    
+
+```diff  
+--- org.gnome.Vino.gschema.xml.org      2020-10-19 06:21:32.034728957 +0900
++++ org.gnome.Vino.gschema.xml  2020-10-19 06:22:30.887994965 +0900
+@@ -154,5 +154,14 @@
+       </description>
+       <default>true</default>
+     </key>
++    <key name='enabled' type='b'>
++      <summary>Enable remote access to the desktop</summary>
++        <description>
++          If true, allows remote access to the desktop via the RFB
++          protocol. Users on remote machines may then connect to the
++          desktop using a VNC viewer.
++        </description>
++      <default>false</default>
++    </key>
+   </schema>
+ </schemalist>
+```
+- 以下のコマンドを実行(これで「システム設定」に「デスクトップの共有」アイコンが表示されるようになる)  
+```bash
+sudo glib-compile-schemas /usr/share/glib-2.0/schemas
+```
+- GUI画面から「システム設定」→「デスクトップの共有」(ユーザ向けカテゴリの中にある)
+  - 「Sharing」カテゴリ
+    - 「Allow other users to view your desktop」にチェックを*入れる*
+    - 「Allow other users to control your desktop」にチェックを*入れる*
+  - 「セキュリティ」カテゴリ
+    - 「You must confirm each access to this machine」のチェックを*はずす*
+    - 「Requwire the user to enter this password」にチェックを*入れて*パスワード設定
+    - 「Automatically configure UPnP router to open and forward ports」のチェックを*はずす*
+  - 「Show Notification Area Icon」カテゴリ
+    - 「Only when someone is connected」を選択
+> [!NOTE]
+> ウィンドウマネージャがUbuntuの時は「設定」で設定する。
+> 左側の「共有」カテゴリを選択、「画面共有」をクリック  
+>   - 「このスクリーンの操作する接続を許可する」をチェック  
+>   - 「アクセスオプション」で「パスワードを要求する」を選択し、パスワード設定  
+>   - 「ネットワーク」で「有線接続1」のスライドスイッチで「オン」を選択
+> 左上のスライドスイッチで「オン」を選択
+> で出来ると思うけど、出来なかったらUnityで上の方法で設定した後、再度Ubuntuに切り替えてちょ。  
+
+- 「自動起動するアプリケーション」を起動
+> [!NOTE]
+> 「コンピュータを検索」で「自動」または「session」と入力すると出てくる
+> 日本語環境だと「startup」で出てこないみたい...
+  - 「追加」ボタンをクリック
+    - 名前に「Vino」
+    - コマンドに「/usr/lib/vino/vino-server」
+    - 説明に「VNC server」
+    ｰ と入力して「追加」をクリック
+- 以下のコマンドを実行
+```bash
+gsettings set org.gnome.Vino require-encryption false
+gsettings set org.gnome.Vino prompt-enabled false
+```
+> [!NOTE]
+> これはVinoの暗号化方式がWindowsと互換性がないための措置で、  
+> 暗号化を無効化しているらしい。  
+> dconf-editorでも設定できる。
+
+> [!WARNING]
+> VNC使う場合は自動ログインをONしておかないといけない  
+> 設定箇所はぐぐってちゃぶだい...😅
+
+- リブートする
+- ホストPCからRealVNCのVNC ViewerやUltraVNC viewerなどで接続する
+
+> [!WARNING]
+> VNCは反応速度が鈍いので、ちょっと使いにくい。  
+> 普段はSSHとsambaとホスト側のX-Serverで動かすのが良いかも...
 
