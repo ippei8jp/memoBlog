@@ -37,6 +37,9 @@ ln -s /usr/lib/python3.6/dist-packages/graphsurgeon ${PYENV_ROOT}/jetson_pythonl
 ln -s /usr/lib/python3.6/dist-packages/tensorrt     ${PYENV_ROOT}/jetson_pythonlib/
 ln -s /usr/lib/python3.6/dist-packages/uff          ${PYENV_ROOT}/jetson_pythonlib/
 ```
+> [!NOTE]
+> ``pip install opencv-python``
+> 、とやりたいけど、ARM版は非対応らしいので...
 - ``~/.bashrc``の修正  
 以下を追加しておく  
 ```bash

@@ -219,3 +219,9 @@ gsettings set org.gnome.Vino prompt-enabled false
 > VNCは反応速度が鈍いので、ちょっと使いにくい。  
 > 普段はSSHとsambaとホスト側のX-Serverで動かすのが良いかも...
 
+
+
+# 追加情報
+ipv6を無効にしたい(ネットワーク環境によっては無効にした方が良い)場合は、  
+[ubuntu 小ネタ集]({{ site.baseurl }}/2020/05/26/ubuntu_koneta.html)の
+「ubuntu 18.04 で IPv6を無効にする方法」 にしたがって設定する。  
