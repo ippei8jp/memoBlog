@@ -25,4 +25,13 @@ RasPiにWindowsからVNC Viewerでつないでいると、しばらくほった�
 
 これでタイムアウトで切断されなくなる  
 
-
+# IPv6の無効化
+- ``/etc/sysctl.conf``に以下を追加する  
+```
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+```
+- 以下を実行する  
+```bash
+sudo sysctl -p
+```
