@@ -8,13 +8,13 @@ excerpt: Windowsの小ネタ集
 # エクスプローラーの右クリックメニューをカスタマイズ
 
 以下のページに詳しい説明がある。  
-- [エクスプローラーの右クリックメニューをカスタマイズする](https://ascii.jp/elem/000/000/953/953807/)  
+- [エクスプローラーの右クリックメニューをカスタマイズする](https://ascii.jp/elem/000/000/953/953807/){:target="_blank"}  
   - わりと全体的な話    
-- [あなただけの右クリックで、ストレスフリーな開発を](https://qiita.com/NumLocker/items/f8016f1aed7207b850fb)  
+- [あなただけの右クリックで、ストレスフリーな開発を](https://qiita.com/NumLocker/items/f8016f1aed7207b850fb){:target="_blank"}  
   - 詳細な設定項目など  
   - フォルダの右クリックとかデスクトップの右クリックなんかも記載アリ  
 
-順序を指定したい場合は``position``キーで ``Top``/``Middle``/``Bottom`` を指定することでできるが、あくまで3種類だけ(下のリンクの[ここ](https://qiita.com/NumLocker/items/f8016f1aed7207b850fb#6-7-%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%81%AE%E8%A1%A8%E7%A4%BA%E4%BD%8D%E7%BD%AE%E3%81%AE%E5%A4%89%E6%9B%B4))。  
+順序を指定したい場合は``position``キーで ``Top``/``Middle``/``Bottom`` を指定することでできるが、あくまで3種類だけ(下のリンクの[ここ](https://qiita.com/NumLocker/items/f8016f1aed7207b850fb#6-7-%E3%83%A1%E3%83%8B%E3%83%A5%E3%83%BC%E3%81%AE%E8%A1%A8%E7%A4%BA%E4%BD%8D%E7%BD%AE%E3%81%AE%E5%A4%89%E6%9B%B4)){:target="_blank"}。  
 表示順序はshellの下のキーがASCIIコード順(?)になるらしいので、  
 同一ポジション内でさらに順序を指定したい場合は、キーに``1_``、``2_``みたいな接頭辞を付けて表示順を固定できるみたい。  
 でも、このままだと接頭辞がついたままの項目でメニューに表示されるので、``(既定)``キーに表示する文字列を設定しておけばOK。  
@@ -67,7 +67,7 @@ PowerShell -File "%SystemDrive%\Scripts\MapDrives.ps1" >> "%TEMP%\MapDrivers.txt
 - スタートアップフォルダに```%SystemDrive%\Scripts\MapDrives.cmd```のショートカットを置く    
 - 作成したショートカットのプロパティを開いて「ショートカット」タブの「実行時の大きさ」を「最小化」に変更しておく。    
 
-参考： [Windows 10、バージョン 1809 において、マップされたネットワークドライブの再接続に失敗する場合がある](https://support.microsoft.com/ja-jp/help/4471218/mapped-network-drive-may-fail-to-reconnect-in-windows-10-version-1809?fbclid=IwAR3FHRrLbLXn8rp_qigZW46oeAWs22x6Uqh-0Nu7psOKDA45UlOo7a9wlg0)
+参考： [Windows 10、バージョン 1809 において、マップされたネットワークドライブの再接続に失敗する場合がある](https://support.microsoft.com/ja-jp/help/4471218/mapped-network-drive-may-fail-to-reconnect-in-windows-10-version-1809?fbclid=IwAR3FHRrLbLXn8rp_qigZW46oeAWs22x6Uqh-0Nu7psOKDA45UlOo7a9wlg0){:target="_blank"}
 
 
 # ファイルをロックしているプログラムを特定する
@@ -75,5 +75,71 @@ PowerShell -File "%SystemDrive%\Scripts\MapDrives.ps1" >> "%TEMP%\MapDrivers.txt
 Windowsでファイル削除しようとしたら、「このファイルはロックされています」と言われてイラっとしたときに
 これを使うとイッパツ解消(と行かないこともないことはない)。
 
-[ファイルの削除を妨げているアプリを特定、ロックを解除できるアプリ「LockHunter」](https://forest.watch.impress.co.jp/docs/review/1222040.html?fbclid=IwAR133Iw2vfGX_e9fnBhm3soJ3iRdY65YOPh02tRa_IkG_ntVWAxesZuFORQ)  
+[ファイルの削除を妨げているアプリを特定、ロックを解除できるアプリ「LockHunter」](https://forest.watch.impress.co.jp/docs/review/1222040.html?fbclid=IwAR133Iw2vfGX_e9fnBhm3soJ3iRdY65YOPh02tRa_IkG_ntVWAxesZuFORQ){:target="_blank"}  
+
+# Windows Terminalをインストールする
+
+Windows Terminalのインストールは Microsoft Store で「Windows Terminal」で検索してインストールするだけでOK。  
+
+## 参考サイト  
+
+TIPS色々    ： [Windows Terminal Tips](https://qiita.com/whim0321/items/6a6b11dea54642bd6724){:target="_blank"}  
+NYAGOSを使う： [Windows Terminal で nyagos を使おう](https://zenn.dev/zetamatta/books/5ac80a9ddb35fef9a146/viewer/a3f5c9){:target="_blank"}  
+色々        ： [1からマスター! Windows Terminal入門](https://news.mynavi.jp/itsearch/series/hardware/1_windows_terminal.html){:target="_blank"}  
+
+## 設定例
+設定ファイルは以下にある。  
+``C:\Users\<<USER>>\AppData\Local\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json``  
+
+設定変更例：
+- フォント/フォントサイズ/ウィンドウサイズ変更
+- ShellにNYAGOSを追加
+- デフォルトをNYAGOSに変更
+
+```diff
+--- settings_org.json   2021-01-31 05:45:34.767869400 +0900
++++ settings.json       2021-01-31 06:46:38.275728600 +0900
+@@ -8,7 +8,11 @@
+ {
+     "$schema": "https://aka.ms/terminal-profiles-schema",
+
+-    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
++    "defaultProfile": "{19ddaf5e-e045-481a-bf88-37f7ebe66292}",
++
++    // window size
++    "initialCols": 80,
++    "initialRows": 55,
+
+     // You can add more global application settings here.
+     // To learn more about global settings, visit https://aka.ms/terminal-global-settings
+@@ -28,10 +32,22 @@
+         "defaults":
+         {
+             // Put settings here that you want to apply to all profiles.
++            // "fontFace": "源真ゴシック等幅 Regular",
++            "fontFace": "BIZ UDゴシック",
++            "fontSize": 12
+         },
+         "list":
+         [
+             {
++                  "guid": "{19ddaf5e-e045-481a-bf88-37f7ebe66292}",
++                  "hidden": false,
++                  "name": "NYAGOS 4.4.9",
++                  "commandline": "C:\\wintools\\nyagos-4.4.9_2\\nyagos.exe",
++                  "icon": "C:\\wintools\\nyagos-4.4.9_2\\nyagos.png",
++                  "cursorShape": "vintage",
++                  "startingDirectory": "c:\\"
++            },
++            {
+                 // Make changes here to the powershell.exe profile.
+                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                 "name": "Windows PowerShell",
+```
+
+## misc
+### NYAGOSのアイコンが表示されないので、表示されるようにする
+- EXEファイルからアイコンを抽出してpngファイルで保存しておく
+  - アイコン抽出には[Icon Ripper](https://www.vector.co.jp/soft/winnt/amuse/se513590.html){:target="_blank"}が使える(インストール不要)
+- ``settings.json`` に ``"icon" : ～ `` でアイコン設定しておく。
 
