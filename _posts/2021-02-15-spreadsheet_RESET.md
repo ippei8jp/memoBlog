@@ -1,5 +1,5 @@
 ---
-title: Google spreadsheet にREST APIを追加
+title: Google spreadsheet にREST APIを追加(その1)
 date: 2021-02-15
 tags: ["Google"]
 excerpt: HTTP GETリクエストでGoogle spreadsheetに追記する
@@ -8,14 +8,14 @@ layout: default
 
 # 概要
 
-[Node.jsでGoogle spreadsheet にデータを書き込む]({{ site.baseurl }}/2019/10/01/spreadsheet.html) で
+[Node.jsでGoogle spreadsheet にデータを書き込む]({{ site.baseurl }}/2019/10/01/spreadsheet.html){:target="_blank"} で
 Google Drive APIでGoogle spreadsheet にデータを書き込む方法を紹介しましたが、
 クライアント側の処理をもっと簡単にするためにREST APIを追加してHTTP GETリクエストでデータを書き込めるようにしてみました。
 
 # 手順  
 
 まずは操作されるspreadsheetを作成します。  
-- [Googleドライブ](https://drive.google.com/drive/) を開く
+- [Googleドライブ](https://drive.google.com/drive/){:target="_blank"} を開く
 - 左側「新規」→ 「Googleスプレッドシート」で新しいスプレッドシートが開く
 - 無題のスプレッドシート」をクリックして名前を入力
 
@@ -77,7 +77,7 @@ function doGet(e) {
 }
 ```
 > [!NOTE]
-> doGet関数のパラメータ``e``については、[このへん]( https://developers.google.com/apps-script/guides/web)を参照してください。  
+> doGet関数のパラメータ``e``については、[このへん]( https://developers.google.com/apps-script/guides/web){:target="_blank"}を参照してください。  
 
 - 右上の青いボタン「デプロイ」→「新しいデプロイ」をクリック
   - 「デプロイタイプを選択してください」と言われるので、「種類の選択」横の歯車アイコンをクリック → 「ウェブアプリ」をクリック
@@ -112,7 +112,7 @@ curl -L "«上でコピーしたURL»?v0=1&v1=2&v2=3"
 または、「デプロイ」→「デプロイをテスト」で表示されるURLを使用すると、デプロイせずに現在の最新ソースで実行できる。  
 ただし、この場合、ユーザ認証が必須になってしまうので、ブラウザ等でアクセスする必要がある。  
 どうしてもcurlでアクセスしたい場合は、ヘッダに``Authorization: Bearer «アクセストークン»``を追加してやれば良い。(あまりおススメはしないけど)  
-やり方は[ここらへん](https://www.ka-net.org/blog/?p=12258)を参考にしてください。  
+やり方は[ここらへん](https://www.ka-net.org/blog/?p=12258){:target="_blank"}を参考にしてください。  
 
 
 # おまけ  
