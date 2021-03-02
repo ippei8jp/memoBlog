@@ -365,3 +365,19 @@ chmod +x ~/デスクトップ/openvino.desktop
 grep -r -n -v '^[[:cntrl:][:print:]]*$' .
 ```
 
+# GUIで設定した項目の変更キーの確認
+
+設定変更の前後で``dconf``コマンドで値一覧を取得し、その差分を確認することで変更キーが分かる。  
+```bash
+dconf dump / > before.txt
+# 設定変更
+dconf dump / > after.txt
+
+diff -u before.txt after.txt
+```
+
+キーが分かれば、以後は以下のコマンドで設定変更できる。  
+スクリプトなどに記載する場合に便利。  
+```bash
+gsettings set «キー» «値»
+```
