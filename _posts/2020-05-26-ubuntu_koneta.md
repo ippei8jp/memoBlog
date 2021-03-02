@@ -381,3 +381,23 @@ diff -u before.txt after.txt
 ```bash
 gsettings set «キー» «値»
 ```
+
+# ディストリビューションのバージョン確認
+
+以下のコマンドで確認できる。  
+
+```bash
+lsb_release -a
+```
+
+こんな感じで表示される  
+
+```bash
+No LSB modules are available.
+Distributor ID: Ubuntu
+Description:    Ubuntu 20.04.2 LTS
+Release:        20.04
+Codename:       focal
+```
+最初の1行は特に気にしなくて良い。  
+LSB(Linux Standard Base)がインストールされていると、もっと細かい情報が表示されるらしい。
