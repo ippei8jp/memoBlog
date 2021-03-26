@@ -18,7 +18,9 @@ VcXsrvをインストールして起動しておく。
 
 ```bash
 # HOSTのIPアドレス取得
-export HOST_IP_ADDR=$(host `hostname`.mshome.net | sed -r 's/.*address (.*)$/\1/')
+# export HOST_IP_ADDR=$(host `hostname`.mshome.net | sed -r 's/.*address (.*)$/\1/')
+# HOSTのIPアドレス取得(アドレスが2つ以上返ってきたときは1個目だけ取り出す)
+export HOST_IP_ADDR=$(host `hostname`.mshome.net | sed -r 's/.*address (.*)$/\1/' | sed -n 1p)
 
 # DISPLAY変数が未定義(MobaXterm使用でない)ならDISPLAYを設定する
 if [ -v $DISPLAY ]; then
