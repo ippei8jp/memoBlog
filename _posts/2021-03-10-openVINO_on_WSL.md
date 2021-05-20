@@ -108,3 +108,11 @@ pip install -r /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/do
 # このデモはグラフィック表示可能環境で実行する必要がある。  
 ./demo_security_barrier_camera.sh 2>&1 | tee /work/tmp/dem2.log
 ```
+
+# 別の仮想環境を用意する場合
+
+別の仮想環境を用意するときは以下で新しい仮想環境下にモジュールをインストールする
+```bash
+pip install -r /opt/intel/openvino_2021/deployment_tools/model_optimizer/requirements.txt
+pip install -r /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/requirements.in
+```
