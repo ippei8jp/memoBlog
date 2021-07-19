@@ -305,6 +305,7 @@ if [ -e $PYENV_ROOT ]; then
     export PATH=$PYENV_ROOT/bin:$PATH
     # 仮想環境名をプロンプトに表示しない場合は以下を有効化
     # export VIRTUAL_ENV_DISABLE_PROMPT=1
+    eval "$(pyenv init --path)"          # pyenv 2.0以降で必要
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
     export PYTHON_CONFIGURE_OPTS="\
