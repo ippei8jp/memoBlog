@@ -35,3 +35,30 @@ net.ipv6.conf.default.disable_ipv6 = 1
 ```bash
 sudo sysctl -p
 ```
+
+# Windowsの共有フォルダのマウント
+
+## Windows側の準備
+Windows側でネットワーク共有したいフォルダを共有に出しておく。  
+めんどくさいのでEveryone フルアクセスで共有に出しておく(自宅なら問題ないでしょう)  
+
+## RasberryPi側でのマウント
+```bash
+sudo mount -t cifs «ネットワークパス» «マウントポイント» -o uid=«linuxのユーザ名»,gid=«linuxのグループ名»,user=«Windowsのユーザ名»,password=«Windowsのパスワード»
+```
+
+【注意】  
+- ネットワークパスのマシン名はNetBIOSの名前(MY_PC)ではなく、mDNSで解決できる名前(MY_PC.local)なので注意。もちろん、IPアドレス直接指定でも問題なし。
+- Everyonで共有に出してあってもanonymousでアクセス出来るわけではないらしいので、Windowsのユーザ名とパスワードは必要。
+- uidとgidは指定してないとオーナがrootになってしまうので、フォルダ内のファイルに書き込みたい場合は指定が必要。
+
+
+例えば、こんな感じ。  
+```bash
+mount -t cifs //MY_PC.local/Share1 /mnt -o uid=hoge,gid=hoge,user=fuga,password=fugafuga
+```
+
+参考： <https://qazsedcftf.blogspot.com/2019/12/raspberry-pi_21.html>
+
+
+
