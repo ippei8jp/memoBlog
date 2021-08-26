@@ -7,10 +7,14 @@ excerpt: RaspberryPiの小ネタ集
 
 # Raspbian Busterのインストール
 [Raspbian Busterのインストール]({{ site.baseurl }}/2019/08/31/raspbian_buster_1.html)  
+[Raspberry Pi OS(May 7th 2021)のインストール]({{ site.baseurl }}/2021/07/17/raspios_20210507.html)  
 
 
 # Raspbian Buster Lite版のインストール
 [Raspbian Buster Lite版のインストール]({{ site.baseurl }}/2019/09/13/raspbian_buster_2.html)  
+
+# SDカードイメージファイルの作成
+[Raspbian SDカードイメージファイルの作成(改訂版)]({{ site.baseurl }}/2021/07/18/sd_image_2.html)
 
 # モバイル ホットスポットでRaspberryPiをネットに接続
 [モバイル ホットスポットでRaspberryPiをネットに接続]({{ site.baseurl }}/2019/09/12/mobilehotspot.html)  
@@ -59,6 +63,34 @@ mount -t cifs //MY_PC.local/Share1 /mnt -o uid=hoge,gid=hoge,user=fuga,password=
 ```
 
 参考： <https://qazsedcftf.blogspot.com/2019/12/raspberry-pi_21.html>
+
+# バージョン情報の取得
+
+## ハードウェアの情報
+```bash
+cat /proc/device-tree/model
+Raspberry Pi 4 Model B Rev 1.2
+```
+
+## カーネルバージョン等の情報
+```bash
+~$ uname -a
+Linux Pi4 5.10.17-v7l+ #1421 SMP Thu May 27 14:00:13 BST 2021 armv7l GNU/Linux
+```
+
+## ディストリビューションやバージョンの情報
+```bash
+~$ lsb_release -a
+No LSB modules are available.
+Distributor ID: Raspbian
+Description:    Raspbian GNU/Linux 10 (buster)
+Release:        10
+Codename:       buster
+```
+
+
+
+
 
 
 
