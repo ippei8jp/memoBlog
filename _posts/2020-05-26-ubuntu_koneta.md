@@ -4,6 +4,14 @@ date: 2020-05-26
 tags: ["Ubuntu"]
 excerpt: ubuntuの小ネタ集
 ---
+# ファイル(ファイルマネージャ)のアドレスバーをテキスト形式にする
+ファイルマネージャのアドレスバーが気持ち悪いので、見慣れたテキスト形式にしたい場合は以下のコマンドで。  
+```bash
+gsettings set org.gnome.nautilus.preferences always-use-location-entry true
+```
+>[!NOTE]
+> 一時的にテキスト形式にした場合は「CTRL+L」  
+
 
 # これまでに apt でインストールしたパッケージを調べる
 
