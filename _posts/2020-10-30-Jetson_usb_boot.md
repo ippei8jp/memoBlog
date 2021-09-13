@@ -5,6 +5,9 @@ tags: ["DeepLearning", "Jetson nano"]
 excerpt: Jetson nano をUSBドライブからブートできるようにする
 ---
 
+本稿はJetoack4.4での手順です。  
+Jetpack4.6のときのメモは[Jetson nano をUSBドライブからブートできるようにする(Jetpack4.6)]({{ site.baseurl }}/2021/09/14/Jetson_usb_boot.html){:target="_blank"} にあります。  
+
 # 概要
 SDカードからブートすると、かなりディスクアクセスが遅いのと、ディスク容量を結構喰うので、  
 USBドライブ(HDD/SSD)からブートできるようにする手順。  

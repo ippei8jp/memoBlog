@@ -5,7 +5,7 @@ tags: ["DeepLearning", "Jetson nano"]
 excerpt: Jetson nano をセットアップする(Jetpack4.6)
 ---
 
-Nvidiaの[Jetson nano](https://www.nvidia.com/ja-jp/autonomous-machines/embedded-systems/jetson-nano/)をセットアップしたときのメモ
+Nvidiaの[Jetson nano](https://www.nvidia.com/ja-jp/autonomous-machines/embedded-systems/jetson-nano/)をセットアップしたときのメモ  
 Jetpack4.4のときのメモは[Jetson nano をセットアップする]({{ site.baseurl }}/2020/10/23/Jetson_nano_install.html){:target="_blank"} にあります。  
 
 # 参照先
