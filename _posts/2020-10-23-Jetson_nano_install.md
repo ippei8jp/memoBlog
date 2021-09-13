@@ -4,8 +4,9 @@ date: 2020-10-23
 tags: ["DeepLearning", "Jetson nano"]
 excerpt: Jetson nano をセットアップする
 ---
+Jetpack4.6のときのメモは[Jetson nano をセットアップする(Jetpack4.6)]({{ site.baseurl }}/2021/09/13/Jetson_nano_install.html){:target="_blank"} にあります。  
 
-Nvidiaの[Jetson nano](https://www.nvidia.com/ja-jp/autonomous-machines/embedded-systems/jetson-nano/)をセットアップしたときのメモ
+Nvidiaの[Jetson nano](https://www.nvidia.com/ja-jp/autonomous-machines/embedded-systems/jetson-nano/)をセットアップしたときのメモ  
 
 # 参照先
 - [「Jetson Nano」の電源を入れて立ち上げる](https://monoist.atmarkit.co.jp/mn/articles/1905/30/news029.html)
