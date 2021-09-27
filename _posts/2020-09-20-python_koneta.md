@@ -9,6 +9,14 @@ excerpt: pythonの小ネタ集
 
 [pyenvのインストール]({{ site.baseurl }}/2019/06/27/pyenv.html)  
 
+## pyenv-virtualenvでベースバージョンにインストールされたパッケージを参照できるようにする
+
+以下のように``--system-site-packages``オプションを指定する。  
+```bash
+pyenv virtualenv --system-site-packages «バージョン» «仮想環境名»
+```
+
+
 
 # csvファイルをエクセルファイルに変換する
 

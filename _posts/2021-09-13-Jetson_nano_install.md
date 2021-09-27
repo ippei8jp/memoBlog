@@ -476,11 +476,6 @@ venvでは逐一仮想環境をアクティベートしなければならない�
 source «venv_dir»/bin/bin/activate
 ```
 
-例えばこんな感じ  
-```bash
-source /proj/venvs/TF2.5/bin/activate
-```
-
 ## お約束
 続いて ``pip`` ``setuptool`` ``wheel`` を最新版にしておく(お約束)。  
 ```bash
@@ -494,41 +489,8 @@ pip install --upgrade pip setuptools wheel
 deactivate
 ```
 >[!NOTE]
-> ``deactivate``はアクティベート時に関数として登録されている
-
-<!-- ---------------------------------------------------------------------- -->
-# tensorflow2 のインストール
-
-tensorflowをimportしたとき(具体的にはその中でnumpyをimportしたとき)に
-``Illegal instruction (core dumped)``が発生する。  
-これを回避するため、以下を``~/.bashrc``に設定しておく(上記``.bashrc``例では記載済み) 。  
-
-```bash
-export OPENBLAS_CORETYPE=ARMV8
-```
-
-tensoorflowはpypiではなく、nvidiaのサイトからダウンロードしてインストールする。  
-```bash
-pip install https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/tensorflow-2.5.0+nv21.7-cp36-cp36m-linux_aarch64.whl
-```
-
->[!NOTE]
-> n5pyインストールでエラーになった時は以下の手順で回避する。    
-> ミソはh5pyのインストール時点でnumpy 1.19.5がインストールされているとエラーになるので、  
-> 一時的にnumpyのそれ以前のバージョンをインストールしてh5pyをインストールし、その後numpyを本来のバージョンに戻す。  
-> ```bash
-> sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev
-> pip install cython
-> # numpyのバージョン下げる  
-> pip install --upgrade numpy==1.19.3
-> pip install h5py==2.10.0
-> # h5pyのインストールのためにインストールしたnumpyを本来のバージョンに更新  
-> pip install --upgrade numpy==1.19.5
-> ```
-
-## Tensorflowなどのありか
-以下に色々まとめられている。  
-<https://elinux.org/Jetson_Zoo?fbclid=IwAR1_Mdi9asx0f8RNvzQIR9suJuPFqwF8ev_C6B7lyLLfsGnnIS4G_yFAr0I#ONNX_Runtime>
+> ``deactivate``はアクティベート時に関数として登録されている  
+> 下記のようにdirenvで設定した場合は``deactivate``は使えないが、ディレクトリから移動すれば元にもどるので問題ない  
 
 <!-- ---------------------------------------------------------------------- -->
 # direnvのインストールと設定
@@ -582,5 +544,95 @@ source /proj/venvs/TF2.5/bin/activate
 (直接編集した時に言われるらしい)  
 ```bash
 direnv allow
+```
+
+<!-- ---------------------------------------------------------------------- -->
+# tensorflow2 のインストール
+## 仮想環境の構築
+```bash
+python3 -m venv --system-site-packages /proj/venvs/TF2.5
+```
+
+## 仮想環境のアクティベート
+```bash
+source /proj/venvs/TF2.5/bin/activate
+```
+またはdirenvで上記が実行されるように設定しておく
+
+## お約束
+続いて ``pip`` ``setuptool`` ``wheel`` を最新版にしておく(お約束)。  
+```bash
+pip install --upgrade pip setuptools wheel
+```
+
+tensorflowをimportしたとき(具体的にはその中でnumpyをimportしたとき)に
+``Illegal instruction (core dumped)``が発生する。  
+これを回避するため、以下を``~/.bashrc``に設定しておく(上記``.bashrc``例では記載済み) 。  
+
+```bash
+export OPENBLAS_CORETYPE=ARMV8
+```
+
+tensoorflowはpypiではなく、nvidiaのサイトからダウンロードしてインストールする。  
+```bash
+pip install https://developer.download.nvidia.com/compute/redist/jp/v46/tensorflow/tensorflow-2.5.0+nv21.7-cp36-cp36m-linux_aarch64.whl
+```
+
+>[!NOTE]
+> n5pyインストールでエラーになった時は以下の手順で回避する。    
+> ミソはh5pyのインストール時点でnumpy 1.19.5がインストールされているとエラーになるので、  
+> 一時的にnumpyのそれ以前のバージョンをインストールしてh5pyをインストールし、その後numpyを本来のバージョンに戻す。  
+> ```bash
+> sudo apt install libhdf5-serial-dev hdf5-tools libhdf5-dev
+> pip install cython
+> # numpyのバージョン下げる  
+> pip install --upgrade numpy==1.19.3
+> pip install h5py==2.10.0
+> # h5pyのインストールのためにインストールしたnumpyを本来のバージョンに更新  
+> pip install --upgrade numpy==1.19.5
+> ```
+
+## Tensorflowなどのありか
+以下に色々まとめられている。  
+<https://elinux.org/Jetson_Zoo?fbclid=IwAR1_Mdi9asx0f8RNvzQIR9suJuPFqwF8ev_C6B7lyLLfsGnnIS4G_yFAr0I#ONNX_Runtime>
+
+<!-- ---------------------------------------------------------------------- -->
+# onnx-runtimeのインストール
+## 仮想環境の構築
+```bash
+python3 -m venv --system-site-packages /proj/venvs/onnx
+```
+
+## 仮想環境のアクティベート
+```bash
+source /proj/venvs/onnx/bin/activate
+```
+またはdirenvで上記が実行されるように設定しておく
+
+## お約束
+続いて ``pip`` ``setuptool`` ``wheel`` を最新版にしておく(お約束)。  
+```bash
+pip install --upgrade pip setuptools wheel
+```
+
+
+## インストールファイルのダウンロード
+[Jetson Zoo](https://elinux.org/Jetson_Zoo?fbclid=IwAR1_Mdi9asx0f8RNvzQIR9suJuPFqwF8ev_C6B7lyLLfsGnnIS4G_yFAr0I#ONNX_Runtime){:target="_blank"}
+から使用環境に対応するインストールファイルをダウンロードする。  
+表の下にあるコマンド例の``wget``ではうまくダウンロードできないのでブラウザでダウンロードしてコピっておく。  
+以下、onnxruntime 1.8.0/Python 3.6 を選択したものとする。  
+
+## インストール
+
+システムにインストールされたprotobufのバージョンが古くてエラーになるので、
+あらかじめ最新版にアップデートしておく。  
+(venv環境なので、システムのprotobufには影響ない)
+```bash
+pip install --upgrade protobuf
+```
+
+ダウンロードしたonnx-runtimeをインストールする
+```bash
+pip install onnxruntime_gpu-1.8.0-cp36-cp36m-linux_aarch64.whl
 ```
 
