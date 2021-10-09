@@ -54,6 +54,10 @@ docker run -it --name py_test python:3.8-buster /bin/bash
 docker run -it --name py_test2 -v /n/work:/work python:3.8-buster /bin/bash
 ```
 
+## カレントディレクトリを /work にマウントする場合(ubuntu)
+```bash
+docker run -it --name py_test2 -v `realpath .`:/work python:3.8-buster /bin/bash
+```
 ## 終了したコンテナの再開
 
 ```bash
