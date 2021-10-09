@@ -2,17 +2,19 @@
 @import "fonts";
 @import "rouge-base16-dark";
 
+@import url('https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap');
+
 /* スクロールバーを常に表示させる */
 html {
   overflow-y: scroll;
 }
 
 body {
-  font:14px/22px 'Quattrocento Sans', "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font:16px/22px 'Kosugi Maru', "Helvetica Neue", Helvetica, Arial, sans-serif;
   color:#666;
   font-weight:300;
   margin: 0px;
-  padding:0px 0 20px 0px;
+  padding:0px 0 10px 0px;
   background: #e0e0c8;
 }
 
@@ -22,7 +24,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p, ul, ol, table, pre, dl {
-  margin:0 0 20px;
+  margin:0 0 10px;
 }
 
 h1, h2, h3 {
@@ -238,7 +240,7 @@ header {
   z-index:99;
   -webkit-font-smoothing:antialiased;
   h1 {
-    font: 40px/48px 'Copse', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 40px/48px 'Kosugi Maru', "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #f3f3f3;
     text-shadow: 0px 2px 0px #235796;
     margin: 0px;
