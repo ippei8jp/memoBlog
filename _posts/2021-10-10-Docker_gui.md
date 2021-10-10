@@ -40,7 +40,7 @@ Docker(ubuntu)でも大丈夫。
 なので、Docker(ubuntu)にリモート接続で使用することがある場合はこっちを使っておくのが良いと思う。  
 WindowsマシンのIPアドレスが192.168.XXX.XXX(マシン名指定不可)だとして  
 ```bash
-docker run -it \
+docker create -it \
     --name py_test4 \
     -v $PWD:/work \
     -e DISPLAY=192.168.XXX.XXX:0.0 \
