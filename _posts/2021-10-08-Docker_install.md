@@ -38,28 +38,23 @@ sudo gpasswd -a $USER docker
 以下はWindows版で書かれているが、基本的にUbuntuでも同じ。  
 <https://qiita.com/nanaki11/items/97e5685ed84547526be2>{:target="_blank"}  
 
-``docker pull``はしなくても``docker run``したときにロ^カルにimegeがなければ自動でダウンロードしてくれるらしい。  
+``docker pull``はしなくても``docker run``したときにローカルにimegeがなければ自動でダウンロードしてくれるらしい。  
 
 
 
 # コマンド例
 ちょろっと試したコマンド群
+## コンテナの生成
+```bash
+docker create \
+    -it \
+    --name py_test \
+    python:3.8-buster \
+    /bin/bash
+```
+
 ## コンテナの起動
-```bash
-docker run -it --name py_test python:3.8-buster /bin/bash
-```
-
-## n:\work を /work にマウントする場合(Windows)
-```bash
-docker run -it --name py_test2 -v /n/work:/work python:3.8-buster /bin/bash
-```
-
-## カレントディレクトリを /work にマウントする場合(ubuntu)
-```bash
-docker run -it --name py_test2 -v `realpath .`:/work python:3.8-buster /bin/bash
-```
-## 終了したコンテナの再開
-
+終了したコンテナの再開も同じ。  
 ```bash
 docker start -ia py_test
 ```
@@ -67,6 +62,37 @@ docker start -ia py_test
 ## コンテナに新たなコンソール接続
 ```bash
 docker exec -it py_test /bin/bash
+```
+
+## コンテナの生成と起動を同時に行う
+``create``を``run``に変えるだけ。  
+```bash
+docker run \
+    -it \
+    --name py_test \
+    python:3.8-buster \
+    /bin/bash
+```
+
+
+## n:\work を /work にマウントする場合(Windows)
+```bash
+docker create \
+    -it \
+    --name py_test2 \
+    -v /n/work:/work \
+    python:3.8-buster \
+    /bin/bash
+```
+
+## カレントディレクトリを /work にマウントする場合(ubuntu)
+```bash
+docker run \
+    -it \
+    --name py_test2 \
+    -v $PWD:/work \
+    python:3.8-buster \
+    /bin/bash
 ```
 
 ## コンテナ一覧(起動中のもののみ)
@@ -81,6 +107,14 @@ docker ps -a
 ## pull済みイメージ一覧
 ```bash
 docker images
+```
+
+## コンテナの情報を確認する
+下記コマンドでJSONデータが出力される。  
+直近で興味ありそうなのは``HostConfig``、``Mounts``、``NetworkSettings``あたりかな？
+
+```bash
+docker inspect py_test2
 ```
 
 # どんなイメージがあるのか？
