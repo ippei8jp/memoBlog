@@ -126,7 +126,9 @@ $(function() {
 $(function() {
     $('#tag_selrctor').change(function() {
         let selected_tag = $(this).val();
-        search_filter(selected_tag);
+        // search_filter(selected_tag);
+        // tagパラメータを指定して現在のページへジャンプ
+        window.location = window.location.pathname + '?tag=' + selected_tag;
     });
 });
 
@@ -135,7 +137,7 @@ function search_filter(selected_tag) {
     $('.list_item').removeClass("list_hide");
 
     // 値が空の場合はすべて表示
-    if(selected_tag === '') {
+    if(!selected_tag) {
         return;
     }
 
@@ -161,3 +163,43 @@ $(function() {
     $("pre.highlight").floatingScroll();
   }
 });
+
+
+// tagパラメータで指定されたタグを表示
+$(function() {
+    // DOMの読み込みが完了したときの処理
+    $(document).ready(function(){
+        // URL内のtagパラメータを取得する
+        let selected_tag = getParam('tag');
+        let found = false;                                  // 見つかったフラグ初期化
+        // tag_selrctor の下のoption全てについて処理
+        $('#tag_selrctor option').each(function(index, element){
+            // この関数はoption1つごとに実行される
+            // indexに順番が、elementあるいはthisでDOMオブジェクトが取れる
+            if (element.value == selected_tag) {
+                // option に selected_tag があった
+                $('#tag_selrctor').val(selected_tag);       // 対象のタグを選択状態にする
+                search_filter(selected_tag);                // 目次のフィルタ処理
+                found = true;                               // 見つかったフラグ
+                // これ以上処理しない    eachメソッドはbreakでなくreturn falseで抜ける
+                return false;
+            }
+        });
+        if (!found) {
+            // 見つからなかった
+            $('#tag_selrctor').val('');
+        }
+    });
+});
+
+
+// URL内の指定されたパラメータの値を取得する
+function getParam(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
