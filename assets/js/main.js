@@ -132,6 +132,17 @@ $(function() {
     });
 });
 
+$(function() {
+    $('.tag_label').click(function() {          // tag_label クラスがクリックされた
+        let selected_tag = $(this).text().trim();
+        // search_filter(selected_tag);
+        // tagパラメータを指定して現在のページへジャンプ
+        window.location = window.location.pathname + '?tag=' + selected_tag;
+    });
+});
+
+
+
 function search_filter(selected_tag) {
     // 非表示状態を解除
     $('.list_item').removeClass("list_hide");
@@ -203,3 +214,5 @@ function getParam(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+

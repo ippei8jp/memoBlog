@@ -75,9 +75,7 @@
             <p style="text-align:right; margin: 0;">{{ post.date | date: "%Y-%m-%d" }} <br></p>
             <p style="text-align:left;  margin: 0;">{{ post.excerpt }}</p>
             {% for tag in post.tags %}
-                <span style="border: 1px solid; padding: 2px 5px; margin-right:1em; background-color:#ffdb4d">
-                    {{ tag }}
-                </span>
+                <span class="tag_label">{{ tag }}</span>
             {% endfor %}
           </div>
         {% endfor %}
