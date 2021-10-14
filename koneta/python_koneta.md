@@ -45,4 +45,21 @@ pipdeptree
 pip check
 ```
 
+# sudo で pyenv環境のpythonを使用する方法
+通常、pyenv環境を設定していてもsudoでroot権限でスクリプトを実行するとsystemのpython(``/usr/bin/python*``)で実行される。  
+sudoでもpyenvで指定したバージョンのpythonで実行するには``/etc/sudoers`` の ``secure_path=``の先頭に以下を追加する  
+```
+«pyenvインストールディレクトリ»/plugins/pyenv-virtualenv/shims:«pyenvインストールディレクトリ»/shims:«pyenvインストールディレクトリ»/bin:
+```
+例えばこんな感じ。  
+```
+/proj/.pyenv/plugins/pyenv-virtualenv/shims:/proj/.pyenv/shims:/proj/.pyenv/bin:
+```
+
+実行の際は ``-E``オプションをつけて環境変数を引き継いで実行する。  
+```
+sudo -E python ～
+```
+この方法でpyenvコマンドも使えるようになる(``pyenv local``くらいしか使い道はないけど)  
+
 
