@@ -36,43 +36,24 @@ $(function() {
 });
 
 
+// -------- コードブロック内のcodeタグにcode_bodyクラスを追加しておく --------
+$(function() {
+  // すべてのhighlightクラスを持つpre要素内のcode要素にcode_bodyクラスを付加
+  $("pre.highlight").find('code').addClass('code_body');
+});
+
+
 // -------- copy button関連処理 --------
 $(function() {
-  // すべてのhighlightクラスを持つdiv要素にdo_copy_buttonクラスを持つdiv要素を追加する
-  // $("div.highlight").prepend('<div class="do_copy_button">Copy</div>');
-  // すべてのhighlightクラスを持つpre要素の前にdo_copy_buttonクラスを持つdiv要素を追加する
-  $("pre.highlight").before('<div class="do_copy_button">Copy</div>');
-  // 元からあるcode要素にcode_bodyクラスを付加
-  $("pre.highlight").find('code').addClass('code_body');
+  // code_bodyクラスを持つ要素の前にコピーボタンを追加
+  $(".code_body").before('<div class="do_copy_button">Copy</div>');
 
   // do_copy_buttonクラスのclickイベントを登録
   $(".do_copy_button").on("click", function(event) {
-    // thisの次の兄弟エレメント(preのはず)
-    let elem_pre = this.nextSibling;
-    // の子の最初のcodeタグ
-    let elem_code = elem_pre.getElementsByClassName('code_body')[0];
-    // の中のテキスト
-    let text = elem_code.innerText;
-
-    // コピー用に一時的にテキストエリアを追加(一瞬見えるかもしれないが我慢して)
-    // textareaにhidden属性を付けると消せるが、クリップボードへコピーできない
-    $('body').append('<textarea id="copyInputArea">' + text + '</textarea>');
-
-    // 作成したテキストエリア
-    let copyInput = $('#copyInputArea')[0];
-
-    // を選択
-    copyInput.select();
-
-    // したのをコピー
-    document.execCommand('copy');
-
-    // 要らなくなったので廃棄
-    copyInput.remove();
-
-    // コピーを通知
-    // console.log("コピーしました");
-    // alert("コピーしました");
+    // thisの兄弟エレメントからcode_bodyクラス内のテキストを取得
+    let text  = $(this).parent().find('.code_body').text();
+    // ckipboard APIでテキストをクリップボードへコピー
+    navigator.clipboard.writeText(text);
   });
 });
 
@@ -96,6 +77,19 @@ $(function() {
     $(element).append('<code class="code_end"></code>');
   });
 });
+
+
+// -------- floatingScrollBar関連処理 --------
+// 引用元： https://amphiluke.github.io/floating-scroll/
+// jquery.floatingscroll.js/.css を読み込んでおくこと
+$(function() {
+  if (typeof $.fn.floatingScroll === 'function') {
+    // floatingScrollが読み込まれていた場合の処理
+    // すべてのhighlightクラスを持つpre要素でfloatingScrollを初期化
+    $("pre.highlight").floatingScroll();
+  }
+});
+
 
 // -------- 引用の処理 --------
 $(function() {
@@ -130,7 +124,6 @@ $(function() {
 });
 
 // -------- tag絞り込み関連処理 --------
-
 $(function() {
     $('#tag_selrctor').change(function() {
         let selected_tag = $(this).val();
@@ -148,7 +141,6 @@ $(function() {
         window.location = window.location.pathname + '?tag=' + selected_tag;
     });
 });
-
 
 
 function search_filter(selected_tag) {
@@ -171,17 +163,6 @@ function search_filter(selected_tag) {
         }
     }
 }
-
-
-// -------- floatingScrollBar関連処理 --------
-// 引用元： https://amphiluke.github.io/floating-scroll/
-$(function() {
-  if (typeof $.fn.floatingScroll === 'function') {
-    // floatingScrollが読み込まれていた場合の処理
-    // すべてのhighlightクラスを持つpre要素でfloatingScrollを初期化
-    $("pre.highlight").floatingScroll();
-  }
-});
 
 
 // tagパラメータで指定されたタグを表示
