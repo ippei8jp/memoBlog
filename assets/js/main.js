@@ -42,13 +42,15 @@ $(function() {
   // $("div.highlight").prepend('<div class="do_copy_button">Copy</div>');
   // すべてのhighlightクラスを持つpre要素の前にdo_copy_buttonクラスを持つdiv要素を追加する
   $("pre.highlight").before('<div class="do_copy_button">Copy</div>');
+  // 元からあるcode要素にcode_bodyクラスを付加
+  $("pre.highlight").find('code').addClass('code_body');
 
   // do_copy_buttonクラスのclickイベントを登録
   $(".do_copy_button").on("click", function(event) {
     // thisの次の兄弟エレメント(preのはず)
     let elem_pre = this.nextSibling;
     // の子の最初のcodeタグ
-    let elem_code = elem_pre.getElementsByTagName('code')[0];
+    let elem_code = elem_pre.getElementsByClassName('code_body')[0];
     // の中のテキスト
     let text = elem_code.innerText;
 
