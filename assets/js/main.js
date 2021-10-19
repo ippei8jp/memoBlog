@@ -80,11 +80,16 @@ $(function() {
   let pre = document.getElementsByTagName('pre');
   let pl = pre.length;
   for (let i = 0; i < pl; i++) {
-    pre[i].innerHTML = '<span class="line-number"></span>' + pre[i].innerHTML + '<span class="cl"></span>';
-    let num = pre[i].innerHTML.split(/\n/).length;
-    for (let j = 0; j < (num - 1); j++) {
-      let line_num = pre[i].getElementsByTagName('span')[0];
-      line_num.innerHTML += '<span>' + (j + 1) + '</span>';
+    if (pre[i].classList.contains('highlight')) {
+      // highlightクラスを持つpre要素について処理
+      let num = pre[i].innerHTML.split(/\n/).length;            // 行数を取得
+      // 行番号表示用タグとフローティング終了用タグを埋める
+      pre[i].innerHTML = '<code class="line-number"></code>' + pre[i].innerHTML + '<code class="line-number-end"></code>';
+      // 行番号表示用タグに行番号を埋める
+      for (let j = 0; j < (num - 1); j++) {
+        let line_num = pre[i].getElementsByClassName('line-number')[0];
+        line_num.innerHTML += (j + 1) + '\n';
+      }
     }
   }
 });
