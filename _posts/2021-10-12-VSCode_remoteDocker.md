@@ -52,7 +52,7 @@ docker ps -a
 
 ## DOCKER HOSTの設定
 VScodeの``settings.json`` に以下の一文を追加する。もちろん上で確認した内容で。
-```JSON
+```json
     "docker.host": "ssh://«ユーザ名»@«ホスト»",
 ```
 >[!NOTE]
