@@ -219,9 +219,11 @@ pre {
     border-right: 1px solid #ddd;
     text-align: right;
   }
-  
+  .code_body {
+    padding-left: 0px;
+  }
   /* float解除用 */
-  .line-number-end {
+  .code_end {
     display: block;
     clear: both;
   }

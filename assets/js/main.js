@@ -79,21 +79,22 @@ $(function() {
 
 // -------- 行番号関連処理 --------
 $(function() {
-  let pre = document.getElementsByTagName('pre');
-  let pl = pre.length;
-  for (let i = 0; i < pl; i++) {
-    if (pre[i].classList.contains('highlight')) {
-      // highlightクラスを持つpre要素について処理
-      let num = pre[i].innerHTML.split(/\n/).length;            // 行数を取得
-      // 行番号表示用タグとフローティング終了用タグを埋める
-      pre[i].innerHTML = '<code class="line-number"></code>' + pre[i].innerHTML + '<code class="line-number-end"></code>';
-      // 行番号表示用タグに行番号を埋める
-      for (let j = 0; j < (num - 1); j++) {
-        let line_num = pre[i].getElementsByClassName('line-number')[0];
-        line_num.innerHTML += (j + 1) + '\n';
+  // highlightクラスを持つpre要素それぞれについて処理
+  $("pre.highlight").each(function(index, element){
+    // 行数を取得
+    let num = $(element).find('.code_body').html().split(/\n/).length - 1;  
+    // 行番号表示用文字列の作成
+    lines_str = (function(num) {
+      var a = [];
+      for (let i = 1; i <= num; i++) {
+        a.push(i);
       }
-    }
-  }
+      return a.join('\n');
+    })(num);
+    // 行番号要素とコード表示終了要素の追加
+    $(element).prepend('<code class="line-number">'+ lines_str +'</code>');
+    $(element).append('<code class="code_end"></code>');
+  });
 });
 
 // -------- 引用の処理 --------
