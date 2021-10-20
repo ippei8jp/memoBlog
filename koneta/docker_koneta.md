@@ -66,4 +66,10 @@ export LANGUAGE=en_US:
 >[!NOTE]
 > LANG=ja_JP.UTF-8 だとダメ。
 
+# Dockerコンテナ内にpingがなかったら
 
+コンテナ作成後に気が付いたら、以下でping他をインストールする。  
+```bash
+apt update
+apt install iputils-ping  net-tools
+```
