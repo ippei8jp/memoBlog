@@ -14,13 +14,15 @@ Raspberry Pi 実機でbuildすると、ディスク容量がバカにならな�
 あまり実環境を弄りたくなかったので、  
 Ubuntuマシン上のDockerコンテナで実行する方法を試してみる(Docker Desktop for Windowsでもできると思う)  
 
-
 # ARM版Dockerコンテナを使用したセルフコンパイル
 
 Dockerコンテナ全体をQEMU上でARMエミュレーションしてくれるので、特に難しいことを考えずに  
 ネイティブ環境と変わりなくあつかえる。  
 でも、かなり遅い(実機よりちょっと速い？同じくらい？)。  
 試した環境では、x86_64な環境でクロスコンパイルした場合の15倍くらいかかった。    
+(M1 Mac上でACVMを使うとかなり早いという噂も...M1 Mac持ってない😢  [参考](https://qiita.com/kose3/items/af9edc9c40c9ae8fc5c3){:target="_blank"}  )
+
+
 
 ## 準備  
 Dockerのインストールは[こちら]({{ site.baseurl }}/2021/10/08/Docker_install.html){:target="_blank"}を参照。  
@@ -34,7 +36,7 @@ sudo apt install qemu-user-static
 ```
 
 >[!NOTE]
-> QEMUの情報： <https://github.com/multiarch/qemu-user-static>  
+> QEMUの情報： <https://github.com/multiarch/qemu-user-static>{:target="_blank"}   
 
 ### 作業用ディレクトリの準備
 
@@ -214,13 +216,19 @@ openVINO全体のインストールなら``work/opt/intel/openvino``
 >[!NOTE]
 > ※※※※ メモ ※※※※   
 > openCVはここでbuildするのではなく、  
-> <https://download.01.org/opencv/master/openvinotoolkit/thirdparty/linux/opencv/>  
+> <https://download.01.org/opencv/master/openvinotoolkit/thirdparty/linux/opencv/>{:target="_blank"} 
 > からbuild済みモジュールをダウンロードして  
 > ``/work/openvino/inference-engine/temp/opencv_4.5.2_debian9arm/``  
 > に展開している。  
 
 
 # i386版(32bit x86)Dockerコンテナを使用したクロスコンパイル
+## 概要
+セルフコンパイルは時間がかかりすぎるので、クロスコンパイルで試してみた。  
+かなり早くなったが、一部使えないモジュールが...  
+当初の目的のCPU extensionは使えるので、掲載しとく。  
+
+
 >[!NOTE]
 > 当初、64bit版debianをベースに作業しようとしたが、
 > pybind11のbuildで以下のように怒られる。
