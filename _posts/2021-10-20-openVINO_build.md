@@ -290,15 +290,18 @@ RUN dpkg --add-architecture armhf && \
     libgstreamer1.0-dev:armhf \
     libgstreamer-plugins-base1.0-dev:armhf \
     libpython3-dev:armhf \
+    libprotobuf-dev libprotoc-dev protobuf-compiler \
+    cmake \
     python3-pip \
     python-minimal \
-    python-argparse \\
+    python-argparse \
     python3-numpy cython3 scons
 
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.21.3/cmake-3.21.3.tar.gz && \
-    tar xzvf cmake-3.21.3.tar.gz && \
-    (cd cmake-3.21.3 && ./bootstrap --parallel=$(nproc --all) -- -DCMAKE_USE_OPENSSL=OFF && make --jobs=$(nproc --all) && make install) && \
-    rm -rf cmake-3.21.3 cmake-3.21.3.tar.gz
+# aptでインストールするので削除
+# RUN wget https://github.com/Kitware/CMake/releases/download/v3.21.3/cmake-3.21.3.tar.gz && \
+#     tar xzvf cmake-3.21.3.tar.gz && \
+#     (cd cmake-3.21.3 && ./bootstrap --parallel=$(nproc --all) -- -DCMAKE_USE_OPENSSL=OFF && make --jobs=$(nproc --all) && make install) && \
+#     rm -rf cmake-3.21.3 cmake-3.21.3.tar.gz
 
 RUN git config --global user.name "«名前»" && \
     git config --global user.email "«メールアドレス»"
@@ -342,7 +345,7 @@ DockerfileからDockerイメージを作成する。
 docker image build -t ov_pi_buster_32 .
 ```
 
-# Dockerコンテナ作成
+## Dockerコンテナ作成
 DockerイメージからDockerコンテナを作成する。  
 以下ではコンテナ名に ``ov_pi_buster_32_1`` を使用。  
 ```bash
@@ -374,6 +377,7 @@ mkdir build && cd build
 ```
 
 ### cmake実行
+```bash
 cmake -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_INSTALL_PREFIX=/work/opt/intel/openvino \
       -DCMAKE_TOOLCHAIN_FILE="../cmake/arm.toolchain.cmake" \
@@ -386,9 +390,12 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DIE_EXTRA_MODULES=../../openvino_contrib/modules \
       -DBUILD_java_api=OFF \
       .. 2>&1 | tee cmake.log
+```
 
 ### make
+```bash
 make --jobs=$(nproc --all) 2>&1 | tee build.log
+```
 
 ### install
 ```bash
