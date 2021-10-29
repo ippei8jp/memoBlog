@@ -118,6 +118,9 @@ DockerイメージからDockerコンテナを作成する。
 ```bash
 docker create -it -v $PWD/work:/work --name ov_pi_emu_1 ov_pi_emu /bin/bash
 ```
+>[!TIP]
+> Windowsでは``$PWD``の代わりに``%CD%``を使用
+
 
 >[!NOTE]
 > ``WARNING: The requested image's platform (linux/arm/v7) does not match the detected host platform (linux/amd64) and no specific platform was requested``  
@@ -336,6 +339,12 @@ index 6cb15a0..66a1ef6 100644
 (cd ./work/openvino; patch -p1 < ../../patch1.patch)
 ```
 
+>[!NOTE]
+> gitコマンドでもpatchをあてられる。  
+> ```bash
+> git -C ./work/openvino apply ../../patch1.patch
+> ```
+
 
 ## Dockerイメージ作成
 DockerfileからDockerイメージを作成する。  
@@ -354,6 +363,9 @@ docker create -it -v $PWD/work:/work --name ov_pi_buster_32_1 ov_pi_buster_32 /b
 >[!NOTE]
 > ``WARNING: The requested image's platform (linux/386) does not match the detected host platform (linux/amd64) and no specific platform was requested``  
 > と言われるけど大丈夫  
+
+>[!TIP]
+> Windowsでは``$PWD``の代わりに``%CD%``を使用
 
 ## Dockerコンテナ起動
 Dockerコンテナを起動する。  
