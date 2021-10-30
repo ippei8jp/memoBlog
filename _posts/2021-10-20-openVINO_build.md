@@ -52,13 +52,16 @@ openvino と openvino_contrib のリポジトリをcloneする。
 ```bash
 mkdir work
 git -C ./work                  clone  -b 2021.4.1 --depth 1 https://github.com/openvinotoolkit/openvino.git 
-git -C ./work/openvino         submodule update --init --recursive
+git -C ./work/openvino         submodule update --init --recursive --depth 1
 git -C ./work                  clone  -b 2021.4 --depth 1 https://github.com/openvinotoolkit/openvino_contrib.git
-git -C ./work/openvino_contrib submodule update --init --recursive
+git -C ./work/openvino_contrib submodule update --init --recursive --depth 1
 ```
 
 >[!NOTE]
 > Dockerコンテナ内から実行してもいいけど、ホストで実行した方が早いので。
+
+>[!NOTE]
+> ``git submodule`` にも ``--depth 1``をつけると早いし、ディスクの節約にもなる。  
 
 
 ### Dockerfileを作成
@@ -306,10 +309,17 @@ openvino と openvino_contrib のリポジトリをcloneする。
 ```bash
 mkdir work
 git -C ./work                  clone  -b 2021.4.1 --depth 1 https://github.com/openvinotoolkit/openvino.git 
-git -C ./work/openvino         submodule update --init --recursive
+git -C ./work/openvino         submodule update --init --recursive --depth 1
 git -C ./work                  clone  -b 2021.4 --depth 1 https://github.com/openvinotoolkit/openvino_contrib.git
-git -C ./work/openvino_contrib submodule update --init --recursive
+git -C ./work/openvino_contrib submodule update --init --recursive --depth 1
 ```
+
+>[!NOTE]
+> Dockerコンテナ内から実行してもいいけど、ホストで実行した方が早いので。
+
+>[!NOTE]
+> ``git submodule`` にも ``--depth 1``をつけると早いし、ディスクの節約にもなる。  
+
 
 ### Dockerfileを作成
 
