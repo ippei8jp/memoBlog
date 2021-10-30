@@ -102,6 +102,47 @@ WORKDIR /work
 >[!TIP]
 > git config ～ を設定してないと、cmake中にgit cloneが失敗する  
 
+### patchファイルを作成
+
+以下の1つのpatchファイルを作成する。  
+
+{% include filename.html filename="patch2.patch" %}
+```diff
+diff --git a/tests/SConscript b/tests/SConscript
+index 041ed8f54..d90ffd844 100644
+--- a/tests/SConscript
++++ b/tests/SConscript
+@@ -28,12 +28,12 @@ Import('install_bin')
+ 
+ # vars is imported from arm_compute:
+ variables = [
+-    BoolVariable("benchmark_examples", "Build benchmark examples programs", True),
+-    BoolVariable("validate_examples", "Build validate examples programs", True),
+-    BoolVariable("reference_openmp", "Build reference validation with openmp", True),
++    BoolVariable("benchmark_examples", "Build benchmark examples programs", False),
++    BoolVariable("validate_examples", "Build validate examples programs", False),
++    BoolVariable("reference_openmp", "Build reference validation with openmp", False),
+     #FIXME Switch the following two options to False before releasing
+-    BoolVariable("validation_tests", "Build validation test programs", True),
+-    BoolVariable("benchmark_tests", "Build benchmark test programs", True),
++    BoolVariable("validation_tests", "Build validation test programs", False),
++    BoolVariable("benchmark_tests", "Build benchmark test programs", False),
+     ("test_filter", "Pattern to specify the tests' filenames to be compiled", "*.cpp")
+ ]
+```
+
+### 上記のpatchをあてる
+```bash
+(cd ./work/openvino_contrib/modules/arm_plugin/thirdparty/ComputeLibrary; patch -p1 < ../../../../../../patch2.patch)
+```
+
+>[!NOTE]
+> gitコマンドでもpatchをあてられる。  
+> ```bash
+> git -C ./work/openvino_contrib/modules/arm_plugin/thirdparty/ComputeLibrary apply  ../../../../../../patch2.patch
+> ```
+
+
 
 ## Dockerイメージ作成
 DockerfileからDockerイメージを作成する。  
@@ -314,6 +355,8 @@ WORKDIR /work
 
 ### patchファイルを作成
 
+以下の2つのpatchファイルを作成する。  
+
 {% include filename.html filename="patch1.patch" %}
 ```diff
 diff --git a/cmake/dependencies.cmake b/cmake/dependencies.cmake
@@ -334,15 +377,44 @@ index 6cb15a0..66a1ef6 100644
      endif()
 ```
 
+{% include filename.html filename="patch2.patch" %}
+```diff
+diff --git a/tests/SConscript b/tests/SConscript
+index 041ed8f54..d90ffd844 100644
+--- a/tests/SConscript
++++ b/tests/SConscript
+@@ -28,12 +28,12 @@ Import('install_bin')
+ 
+ # vars is imported from arm_compute:
+ variables = [
+-    BoolVariable("benchmark_examples", "Build benchmark examples programs", True),
+-    BoolVariable("validate_examples", "Build validate examples programs", True),
+-    BoolVariable("reference_openmp", "Build reference validation with openmp", True),
++    BoolVariable("benchmark_examples", "Build benchmark examples programs", False),
++    BoolVariable("validate_examples", "Build validate examples programs", False),
++    BoolVariable("reference_openmp", "Build reference validation with openmp", False),
+     #FIXME Switch the following two options to False before releasing
+-    BoolVariable("validation_tests", "Build validation test programs", True),
+-    BoolVariable("benchmark_tests", "Build benchmark test programs", True),
++    BoolVariable("validation_tests", "Build validation test programs", False),
++    BoolVariable("benchmark_tests", "Build benchmark test programs", False),
+     ("test_filter", "Pattern to specify the tests' filenames to be compiled", "*.cpp")
+ ]
+```
+
+
+
 ### 上記のpatchをあてる
 ```bash
 (cd ./work/openvino; patch -p1 < ../../patch1.patch)
+(cd ./work/openvino_contrib/modules/arm_plugin/thirdparty/ComputeLibrary; patch -p1 < ../../../../../../patch2.patch)
 ```
 
 >[!NOTE]
 > gitコマンドでもpatchをあてられる。  
 > ```bash
 > git -C ./work/openvino apply ../../patch1.patch
+> git -C ./work/openvino_contrib/modules/arm_plugin/thirdparty/ComputeLibrary apply  ../../../../../../patch2.patch
 > ```
 
 
