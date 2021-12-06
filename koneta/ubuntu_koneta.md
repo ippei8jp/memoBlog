@@ -70,6 +70,30 @@ apt-file search ○○
 apt-file show <パッケージ名>
 ```
 
+# リソースモニタツール netdataのインストール
+
+## ツールのインストール  
+```bash
+sudo apt update
+sudo apt install netdata
+```
+
+## 設定変更
+リモートマシンからブラウズできるように、``/etc/netdata/netdata.conf``の
+``bind socket to IP``の設定値を``0.0.0.0`` に変更する。
+
+## サービスの再起動
+設定を変更したので再起動。  
+```bash
+sudo systemctl restart netdata 
+```
+
+あとはブラウザで対象マシンのポート19999 にアクセスすればOK  
+```
+http://192.168.XXX.XXX:19999
+```
+
+
 
 # VirtualBox上のUbuntuとclipboardの共有がおかしくなったときの対処方法
 
