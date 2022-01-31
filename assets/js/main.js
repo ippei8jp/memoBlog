@@ -205,3 +205,10 @@ function getParam(name, url) {
 }
 
 
+// -------- gist表示関連処理 --------
+// 折り畳み表示のイベントハンドラ登録
+// class="accordion_head"を指定したブロックの次のブロックを折りたたむ
+$(document).on("click", ".accordion_head", function(){
+  $(this).toggleClass("closed");
+  $(this).next().slideToggle(1000);
+});

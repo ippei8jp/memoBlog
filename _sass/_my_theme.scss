@@ -99,8 +99,8 @@ ul{
     margin-left: 10px;
   }
   li:before { 
-              content:"◆";
-              color: #FF7F7F;
+              content:"\2b9a ";
+              color: #FF3F3F;
             }
 }
 
@@ -439,4 +439,39 @@ select#tag_selrctor {
 
 p.to_top {
   font-size: smaller;
+}
+/* -------------------------------------------------------------------------------------------------------- */
+// gist関連
+.my-gist {
+  // 各部のpaddingを詰める
+  .gist,.gist-file,.gist-data,.js-gist-file-update-container,.js-task-list-container,.js-gist-file-update-container>.file{
+    padding:0px !important;
+  }
+  
+  // 外側の上下だけちょっと広げる
+  .blob-wrapper{
+    padding:15px 0 !important;
+  }
+
+  // 奇数行の背景を変える
+  table.highlight tr:nth-child(2n+1) td {
+    background: #e0e0e0;
+  }
+
+  // タイトル部の背景
+  .gist-meta{
+    background:#ffc0c0 !important;
+    padding:5px 20px !important;
+  }
+  
+}
+/* -------------------------------------------------------------------------------------------------------- */
+// 折り畳み関連
+.accordion_head:before {		        /* 折り畳みブロックの見出しの先頭に追加文字 */
+  content:"\25be 折り畳む ";		/* 下向き三角 */
+}
+
+.accordion_head.closed:before {		/* 折り畳みブロックの見出しの先頭に追加文字 */
+                            /* .my-gist と .closed の間にスペース入れちゃダメ!! */
+  content:"\25b6 開く ";	  /* 右向き三角 */
 }
