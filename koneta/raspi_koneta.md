@@ -4,20 +4,30 @@ date: 2020-09-20
 tags: ["RaspberryPi"]
 excerpt: RaspberryPiの小ネタ集
 ---
+# ダウンロードページ
+[Raspberry Pi OS](https://www.raspberrypi.com/software/operating-systems/){:target="_blank"}  
+<small>ページ構成がコロコロ変わるので、このリンクもいつまで正しいやら...</small>
 
-# Raspbian Busterのインストール
-[Raspbian Busterのインストール]({{ site.baseurl }}/2019/08/31/raspbian_buster_1.html)  
-[Raspberry Pi OS(May 7th 2021)のインストール]({{ site.baseurl }}/2021/07/17/raspios_20210507.html)  
+# ドキュメント
+[Raspberry Pi Documentation](https://www.raspberrypi.com/documentation/computers/){:target="_blank"}  
 
 
-# Raspbian Buster Lite版のインストール
-[Raspbian Buster Lite版のインストール]({{ site.baseurl }}/2019/09/13/raspbian_buster_2.html)  
+# Raspberry Pi OS(64bit)のインストール
+[Raspberry Pi OS(64bit)(Jan 28th 2022)のインストール]({{ site.baseurl }}/2022/02/25/raspios_64_20220128.html){:target="_blank"}  
 
 # SDカードイメージファイルの作成
-[Raspbian SDカードイメージファイルの作成(改訂版)]({{ site.baseurl }}/2021/07/18/sd_image_2.html)
+[Raspbian SDカードイメージファイルの作成(改訂版)]({{ site.baseurl }}/2021/07/18/sd_image_2.html){:target="_blank"}  
+
+# Raspbian Busterのインストール【旧バージョン】
+[Raspbian Busterのインストール]({{ site.baseurl }}/2019/08/31/raspbian_buster_1.html){:target="_blank"}  
+[Raspberry Pi OS(May 7th 2021)のインストール]({{ site.baseurl }}/2021/07/17/raspios_20210507.html){:target="_blank"}  
+
+
+# Raspbian Buster Lite版のインストール【旧バージョン】
+[Raspbian Buster Lite版のインストール]({{ site.baseurl }}/2019/09/13/raspbian_buster_2.html){:target="_blank"}  
 
 # モバイル ホットスポットでRaspberryPiをネットに接続
-[モバイル ホットスポットでRaspberryPiをネットに接続]({{ site.baseurl }}/2019/09/12/mobilehotspot.html)  
+[モバイル ホットスポットでRaspberryPiをネットに接続]({{ site.baseurl }}/2019/09/12/mobilehotspot.html){:target="_blank"}  
 
 # VNCタイムアウトの変更
 RasPiにWindowsからVNC Viewerでつないでいると、しばらくほったらかしにすると切断されてしまう。  
