@@ -132,8 +132,8 @@ RUN apt-get update && \
     python3-minimal \
     python3-numpy cython3 scons
 
-RUN git config --global user.name "ippei8jp" && \
-    git config --global user.email "48367499+ippei8jp@users.noreply.github.com"
+RUN git config --global user.name "«ユーザ名»" && \
+    git config --global user.email "«メールアドレス»"
 
 WORKDIR /work
 ```
@@ -168,7 +168,6 @@ WORKDIR /work
 > +    python3-minimal \
 >      python3-numpy cython3 scons
 >  
->  RUN git config --global user.name "ippei8jp" && \
 > ```
 
 
