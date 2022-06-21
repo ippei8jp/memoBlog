@@ -1,7 +1,7 @@
 ---
 title: python の async/await
 date: 2019-06-22
-tags: ["python"]
+tags: ["Ubuntu","RaspberryPi","Windows","python"]
 excerpt: python の async/awaitってどう動くんだっけ？
 layout: default
 ---
