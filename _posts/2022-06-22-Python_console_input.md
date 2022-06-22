@@ -1,6 +1,6 @@
 ---
 title: Pythonのasyncioでnon-blockingなコンソール入力
-date: 2022-06-21
+date: 2022-06-22
 tags: ["Ubuntu","RaspberryPi","Windows","python"]
 excerpt: Pythonのasyncioでnon-blockingなコンソール入力を行うためのクラス
 ---
