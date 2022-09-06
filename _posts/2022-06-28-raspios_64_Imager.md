@@ -39,6 +39,10 @@ UARTをコンソールとして使用するために``config.txt`` の 最後の
 # enable uart
 enable_uart=1
 ```
+## IPv6の無効化
+IPv6を無効化しておきたいときは、
+``cmdline.txt`` に ``ipv6.disable=1``を追加する。  
+このファイルは1行で書かないといけないので、改行してはいけない。  
 
 ## ブートログの表示
 
