@@ -79,7 +79,7 @@ sudo apt upgrade
 ここで一旦リブートしておく。
 
 その他こまごました設定はこちらが参考になるかも。  
-- [UbuntuをNative環境にインストールする(18.04)](https://ippei8jp.github.io/memoBlog/2020/05/08/ubuntu_native.html)
+- [UbuntuをNative環境にインストールする(18.04)]({{ site.baseurl }}/2020/05/08/ubuntu_native.html)
 
 インストールしたパッケージ
 gnome-tweaks

@@ -5,7 +5,7 @@ tags: ["linux", "sample program"]
 excerpt: linuxでのテストプログラム用キーボードコマンダー
 ---
 # 概要
-[test shellのひな型](https://ippei8jp.github.io/memoBlog/2023/05/15/test_shell_1.html){:target="_blank"}
+[test shellのひな型]({{ site.baseurl }}/2023/05/15/test_shell_1.html){:target="_blank"}
 のようなテストシェルでコマンド処理するほどでもないが、いくつかのパターンを繰り返し実行してテストしてみたい
 場合に使えるキーボードコマンダー(という名前がふさわしいか分からないが)のひな型を作ってみた。  
 
