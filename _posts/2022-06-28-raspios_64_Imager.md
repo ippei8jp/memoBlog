@@ -7,6 +7,7 @@ layout: default
 ---
 
 また手順が変わったみたいなので、メモも更新。  
+(2023/10/15 最新版での試行結果を反映)
 
 # SDカードへの書き込み
 
@@ -23,8 +24,13 @@ Wi-Fiの設定やSSHの設定も(なんかWindowsが適切に設定されてれ�
 最初にログインしたときに変更する、なんてことをやった方が良いと言ってる解説ページもあった。  
 
 >[!WARNING]
-> なぜかSSHの認証方法が毎回「パスワード認証を使う」になってしまうので、公開鍵を使うときは再度設定が必要。  
-> 
+> ~~なぜかSSHの認証方法が毎回「パスワード認証を使う」になってしまうので、公開鍵を使うときは再度設定が必要。~~ 
+> (1.7.5では改善された模様)
+
+>[!WARNING]
+> (少なくとも)2023/10以降のバージョンはopenSSHのバージョンがRSA非対応になっているので、
+> 鍵ファイル作成の際はRSA以外(ed25519など)で作成する必要がある。  
+> ssh-keygenのデフォルトはRSAなので、``ssh-keygen -t ed25519`` などとする。
 
 
 # ブート前の設定
@@ -59,10 +65,14 @@ IPv6を無効化しておきたいときは、
 
 # 何はともあれ、最新版へ
 
+ついでにロケールの変更もやってしまおう。  
+(imagerだとキーボードレイアウトの変更はやってくれるけど、ロケールの変更はやってくれないらしいので)
+
 ```
 # アップデート実行
 sudo apt update
 sudo apt upgrade
+
 # リブート
 sudo reboot
 ```
@@ -72,7 +82,7 @@ sudo reboot
 > [Raspberry Pi セットアップスクリプト ](https://gist.github.com/ippei8jp/8053f0804a694c34cb18cd4035e0993c){:target="_blank"}  
 > 以下の手順で実行できます。  
 > ```bash
-> wget https://gist.githubusercontent.com/ippei8jp/8053f0804a694c34cb18cd4035e0993c/raw/78961e0f867cc1a6e7f15344fd2db2c87471f357/pi_setup1.sh
+> wget https://gist.githubusercontent.com/ippei8jp/8053f0804a694c34cb18cd4035e0993c/raw/pi_setup1.sh
 > bash pi_setup1.sh
 > ```
 > 途中でパスワード入力しないといけないので、完全自動じゃないけど、かなり手間は省けるはず。  
@@ -87,9 +97,21 @@ sudo reboot
 
 ```bash
 cd ~
-wget https://gist.githubusercontent.com/ippei8jp/8053f0804a694c34cb18cd4035e0993c/raw/291b9eae7dc67ecc3d25a642b3b96be1c4a14a43/pi_setup1.sh
+wget https://gist.githubusercontent.com/ippei8jp/8179edb10867faf98e233a52965a9e53/raw/4f39afbcd8471426421944b597f3a5f2963984c6/resize.py
 
 chmod +x resize.py
+
+./resize.py
+```
+
+日本語表示のため、ロケールを変更する。  
+
+```bash
+# ロケールの変更
+sudo raspi-config nonint do_change_locale ja_JP.UTF-8
+
+# リブートまでとりあえずLANGのみ変更で日本語表示
+export LANG=ja_JP.UTF-8
 ```
 
 ``~/.bashrc``を必要に応じて修正。
@@ -153,6 +175,14 @@ if [ -e $NODENV_ROOT ]; then
     export PATH=$NODENV_ROOT/bin:$PATH
     eval "$(nodenv init -)"
 fi
+
+
+# DISPLAY変数が未定義(MobaXterm使用でない)ならDISPLAYを設定する
+if [ -v $DISPLAY ]; then
+    export DISPLAY=192.168.78.200:0.0
+fi
+echo DISPLAY="$DISPLAY"
+
 ```
 
 # キーボードのCAPS - CTRLの入れ替え
@@ -286,22 +316,22 @@ sudo raspi-config
 
 
 
-# Splash screenの無効化とブートログの表示
+# Splash screenの再有効化
 
-セットアップ時にブートログが表示されるようにしてなかったけど、  
-やっぱり表示したくなった、てなときは以下で。  
+セットアップ時にブートログが表示されるようにしたけど、  
+やっぱり表示したくなくなった(Splash screenを表示)、てなときは以下で。  
 ```
 sudo raspi-config
     1 System Options
-        S7 Splash Screen
+        S6 Splash Screen
             Would you like to show the splash screen at boot?
-            と聞かれるので無効化するときは <No> を選択
-            Splash screen at boot is disabled)
+            と聞かれるので有効化するときは <Yes> を選択
+            Splash screen at boot is enabled)
             と表示されるので <Ok>
 
     Would you like to reboot now?
     と聞かれるので、その場でリブートしてよければ<Yes>
 ```
 >[!NOTE]
-> 直接``/boot/cmdline.txt`` から ``quiet`` ``splash`` ``plymouth.ignore-serial-consoles`` を削除しても良い
+> 直接``/boot/cmdline.txt`` に ``quiet`` ``splash`` ``plymouth.ignore-serial-consoles`` を追加しても良い
 
