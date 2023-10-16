@@ -50,6 +50,10 @@ IPv6を無効化しておきたいときは、
 ``cmdline.txt`` に ``ipv6.disable=1``を追加する。  
 このファイルは1行で書かないといけないので、改行してはいけない。  
 
+>[!WARNING]
+> 以前はこれで無効化できていたはずだけど、2023/10現在 この手順では無効化できないらしい。  
+> 下でセットアップスクリプトで無効化処理を実行するように変更した。
+
 ## ブートログの表示
 
 ブートログが見えないと不安な人は、  
@@ -65,9 +69,6 @@ IPv6を無効化しておきたいときは、
 
 # 何はともあれ、最新版へ
 
-ついでにロケールの変更もやってしまおう。  
-(imagerだとキーボードレイアウトの変更はやってくれるけど、ロケールの変更はやってくれないらしいので)
-
 ```
 # アップデート実行
 sudo apt update
@@ -76,6 +77,8 @@ sudo apt upgrade
 # リブート
 sudo reboot
 ```
+
+# カスタマイズ
 
 >[!NOTE]
 > 以降の処理をスクリプトにまとめました。  
@@ -91,7 +94,7 @@ sudo reboot
 > 
 
 
-# ~/.bashrcの設定など
+## resizeスクリプトの取得
 
 シリアルコンソールを使用する場合、コンソールサイズがあってなくてイライラするので、シリアルコンソールの設定用スクリプトを以下の手順で取得。  
 
@@ -104,7 +107,9 @@ chmod +x resize.py
 ./resize.py
 ```
 
+## ロケールの変更
 日本語表示のため、ロケールを変更する。  
+(imagerだとキーボードレイアウトの変更はやってくれるけど、ロケールの変更はやってくれないらしいので)
 
 ```bash
 # ロケールの変更
@@ -114,6 +119,7 @@ sudo raspi-config nonint do_change_locale ja_JP.UTF-8
 export LANG=ja_JP.UTF-8
 ```
 
+## .bashrc の変更  
 ``~/.bashrc``を必要に応じて修正。
 例えば、以下を追記。
 
@@ -185,7 +191,7 @@ echo DISPLAY="$DISPLAY"
 
 ```
 
-# キーボードのCAPS - CTRLの入れ替え
+## キーボードのCAPS - CTRLの入れ替え
 
 物理キーボード接続で使わないなら設定不要  
 
@@ -205,7 +211,7 @@ XKBOPTIONS="ctrl:swapcaps"      # CapsLock <-> Ctrl
 > VNCしか使わないから、ま、いっか。  
 > 
 
-# bashのクリップボードの挙動が以前と異なるようになったので対策
+## bashのクリップボードの挙動が以前と異なるようになったので対策
 
 bashでクリップボードからペーストするとペーストした文字が選択状態になったり、改行がその場で入力されなかったりするようになった。  
 こればbash 5.1からブラケットペーストモード というのがデフォルトで有効になったためらしい。  
@@ -221,7 +227,7 @@ set enable-bracketed-paste off
 参考： [シェル - bash - ブラケットペーストモード（Bracketed Paste Mode）](https://freebsd.sing.ne.jp/shell/03/04.html){:target="_blank"}  
 
 
-# ワークディレクトリの作成とsambaの設定
+## ワークディレクトリの作成とsambaの設定
 
 まずはワークディレクトリの作成  
 
@@ -287,7 +293,7 @@ sudo service smbd reload
 sudo service smbd restart
 ```
 
-# VNCサーバの有効化
+## VNCサーバの有効化
 
 リモートデスクトップを使うために、VNCサーバの有効化を行う。  
 
@@ -311,6 +317,39 @@ sudo raspi-config
             と表示されるので <Ok>
     # 設定終了
     <Finish>
+```
+
+## IPv6 の無効化
+
+``cmdline.txt``での設定では無効化できなくなったみたいなので、``mncli``コマンドで無効化する。  
+接続名一覧を取得し、 それぞれに対して無効化するコマンドを実行する。  
+接続名に「有線接続 1」と空白が含まれている接続があるので、一時的に空白をセミコロンに置換して処理を行っている。  
+(これをやらないと「有線接続」と「1」に分けて処理されてしまう)  
+
+```bash
+# 接続一覧を取得
+conn_data=$(nmcli -t connection)
+
+# 空白を";"に置換(配列代入時に誤動作するのを防止)
+conn_data=${conn_data// /";"}
+
+# ':'区切りで1列目をconnections配列に格納
+connections=($(echo "$conn_data" | cut -d":" -f1))
+
+# 配列の要素を処理
+for connection in "${connections[@]}"; do
+    # 上で;に置換した空白を戻す
+    connection=${connection//";"/" "}
+
+    if [[ "$connection" != 'lo' ]]; then    # loデバイスは無効にできないので除外
+      echo "disable \"${connection}\"" 
+      cmd="sudo nmcli connection modify \"${connection}\" ipv6.method \"disabled\""
+      # 有効にする場合はこちら
+      # cmd="sudo nmcli connection modify \"${connection}\" ipv6.method \"auto\""
+      echo $cmd
+      eval $cmd
+    fi
+done
 ```
 
 
