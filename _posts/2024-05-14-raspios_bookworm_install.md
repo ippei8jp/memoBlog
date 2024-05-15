@@ -11,19 +11,32 @@ RaspberrypiOSがBookwormになったので、インストール方法のメモ�
 基本的にBullseyeのときと変わらないけど、ちょっと変わったところもあるので。  
 [Bullseyeのときの手順メモ]({{ site.baseurl }}/2022/06/28/raspios_64_Imager.html){:target="_blank"}も参照してください。    
 
-# ウィンドウマネージャをOpenboxに変更
-VNCが色々不具合まみれなので以前のバージョンと同じX11ベースのOpenboxに変更する。  
-変更後、リブート必須。  
-```bash
-sudo raspi-config nonint do_wayland W1
-sudo reboot 
-```
+# ウィンドウマネージャをOpenboxに変更はしない
+VNCが色々不具合まみれなので以前のバージョンと同じX11ベースのOpenboxに変更した方が良かったんだけど
+改善されているみたいなので変更しないでおく。  
 
-以下のコマンドでデフォルトのウィンドウマネージャ(wayfire)が無効になっていることを確認する。  
-なにも表示されなければOK  
+IpV6無効の環境でwayfireでVNCを有効にする場合、以下のコマンドでwayfireでIPv4を使用するように設定する必要がある。  
 ```bash
-pgrep wayfire
+sudo cp /etc/wayvnc/config /etc/wayvnc/config.org
+sudo sed -i "s/\:\:/0\.0\.0\.0/g" /etc/wayvnc/config
 ```
+``/etc/wayvnc/config``の2行目の``address=::``を``address=0.0.0.0``に変更している。  
+
+
+> [!NOTE]
+> ちなみにOpenboxに変更したい場合は以下のコマンドで変更できる。  
+> 
+> 変更後、リブート必須。  
+> ```bash
+> sudo raspi-config nonint do_wayland W1
+> sudo reboot 
+> ```
+> 
+> 以下のコマンドでデフォルトのウィンドウマネージャ(wayfire)が無効になっていることを確認する。  
+> なにも表示されなければOK  
+> ```bash
+> pgrep wayfire
+> ```
 
 # お約束
 
