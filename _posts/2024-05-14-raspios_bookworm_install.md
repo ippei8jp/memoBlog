@@ -25,15 +25,35 @@ Raspberry Pi Imager で書き込み。
 > 下記の変更をイッパツで行うスクリプトは以下。  
 > Windowsのコマンドプロンプトで実行すると想定。  Windows版python必要。  
 > それぞれの``F=``の部分を対象のドライブレターに変更する。  
+>
+> - UARTにUARTコネクタを使用する場合はこちら  
+> ```bash
+> python -c "import re;F=r'G:\config.txt';a=open(F).read();a=re.sub(r'\[all\](?!.*\[all\])', '[pi5]\ndtparam=uart0\n\n[all]\nenable_uart=1\n', a, flags=re.DOTALL);open(F, 'w').write(a)"
+> python -c "F=r'G:\cmdline.txt';a=open(F).read();a=a.replace(' quiet', '').replace(' splash', '').replace(' plymouth.ignore-serial-consoles', '')+' ipv6.disable=1';open(F, 'w').write(a)"
+> ```
+> - UARTに40pinヘッダのpin8/10(GPIOs 14 & 15)を使用する場合はこちら  
 > ```bash
 > python -c "import re;F=r'G:\config.txt';a=open(F).read();a=re.sub(r'\[all\](?!.*\[all\])', '[pi5]\ndtparam=uart0_console\n\n[all]\nenable_uart=1\n', a, flags=re.DOTALL);open(F, 'w').write(a)"
 > python -c "F=r'G:\cmdline.txt';a=open(F).read();a=a.replace(' quiet', '').replace(' splash', '').replace(' plymouth.ignore-serial-consoles', '')+' ipv6.disable=1';open(F, 'w').write(a)"
 > ```
 
 
+
 ## UARTコンソールの有効化
 
 UARTをコンソールとして使用するために``config.txt`` の 最後の ``[all]`` の行を以下に変更
+
+- UARTにUARTコネクタを使用する場合はこちら  
+
+```
+[pi5]
+dtparam=uart0
+
+[all]
+enable_uart=1
+```
+
+- UARTに40pinヘッダのpin8/10(GPIOs 14 & 15)を使用する場合はこちら   
 
 ```
 [pi5]
@@ -42,10 +62,6 @@ dtparam=uart0_console
 [all]
 enable_uart=1
 ```
-
-> [!NOTE]
-> 上記は40pinヘッダのpin8/10(GPIOs 14 & 15)を使用する場合の設定。  
-> UARTコネクタ(3pin)を使用する場合は``dtparam=uart0``とする。  
 
 ## IPv6の無効化
 IPv6を無効化しておきたいときは、
