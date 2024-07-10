@@ -467,11 +467,37 @@ p.to_top {
 }
 /* -------------------------------------------------------------------------------------------------------- */
 // 折り畳み関連
-.accordion_head:before {		        /* 折り畳みブロックの見出しの先頭に追加文字 */
+
+.accordion_head {
+    padding: 20px 0px 80px 40px;
+}
+
+.accordion_head_close {
+    padding: 20px 0px 80px 40px;
+}
+
+.accordion_head:before {		    /* 折り畳みブロックの見出しの先頭に追加文字 */
   content:"\25be 折り畳む ";		/* 下向き三角 */
 }
 
 .accordion_head.closed:before {		/* 折り畳みブロックの見出しの先頭に追加文字 */
-                            /* .my-gist と .closed の間にスペース入れちゃダメ!! */
-  content:"\25b6 開く ";	  /* 右向き三角 */
+                                    /* .accordion_head と .closed の間にスペース入れちゃダメ!! */
+  content:"\25b6 開く ";	        /* 右向き三角 */
 }
+
+.accordion_head_close:before {	    /* 折り畳みブロックの見出しの先頭に追加文字 */
+  content:"\25b6 開く ";	        /* 右向き三角 */
+}
+
+.accordion_head_close.opened:before {	/* 折り畳みブロックの見出しの先頭に追加文字 */
+                                        /* .accordion_head_close と .closed の間にスペース入れちゃダメ!! */
+  content:"\25be 折り畳む ";		    /* 下向き三角 */
+}
+
+
+
+
+
+
+
+

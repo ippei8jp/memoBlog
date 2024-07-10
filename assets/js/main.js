@@ -212,3 +212,14 @@ $(document).on("click", ".accordion_head", function(){
   $(this).toggleClass("closed");
   $(this).next().slideToggle(1000);
 });
+
+$(document).ready(function(){
+  $(".accordion_head_close").next().slideToggle();
+});
+
+
+$(document).on("click", ".accordion_head_close", function(){
+  $(this).toggleClass("opened");
+  $(this).next().slideToggle(1000);
+});
+
