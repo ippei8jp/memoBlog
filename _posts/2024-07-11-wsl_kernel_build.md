@@ -365,7 +365,7 @@ outディレクトリに作成された``linux-module-usb-storage-5.15.153.1-mic
 を参照してください。  
 
 ```bash
-dpkg -i linux-module-usb-storage-5.15.153.1-microsoft-standard-wsl2_5.15.153.1-3_amd64
+sudo dpkg -i linux-module-usb-storage-5.15.153.1-microsoft-standard-wsl2_5.15.153.1-3_amd64
 ```
 標準カーネルを使用することを前提にしているので、カーネルの差し替えは必要ありません。  
 
@@ -434,7 +434,7 @@ uname -r
 > 差し替え前が標準カーネルだった場合、インストール先がリードオンリーのため、インストールに失敗します。  
 
 ```bash
-dpkg -i /mnt/c/WSL_KERNEL/linux-module-6.6.36.3-microsoft-standard-wsl2_6.6.36.3-3_amd64.deb
+sudo dpkg -i /mnt/c/WSL_KERNEL/linux-module-6.6.36.3-microsoft-standard-wsl2_6.6.36.3-3_amd64.deb
 ```
 
 インストールされると、``/usr/lib/modules/6.6.36.3-microsoft-standard-WSL2/``以下に各種ファイルが作成されます。  
