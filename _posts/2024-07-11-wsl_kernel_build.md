@@ -18,6 +18,7 @@ WSLでUSBストレージ(USBメモリなど)を使う方法を書こうと手順
 参照：[カーネルモジュールのビルドと使用](https://qiita.com/qawsed477/items/11e4248861fdf8c6a585?fbclid=IwZXh0bgNhZW0CMTAAAR1xXTBXfWFXYm0xDQBugh52dR0LuLYyxMRHjeuj4BidPo9gNW-OJfKAgjA_aem_k3Z0rVIUqWAtPxAia200VQ){:target="_blank"}  
 
 
+
 # 準備の準備
 
 ## WSLディストリビューションでsystemdの有効化
