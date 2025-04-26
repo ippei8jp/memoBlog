@@ -455,7 +455,7 @@ p.to_top {
 
   // 奇数行の背景を変える
   table.highlight tr:nth-child(2n+1) td {
-    background: #e0e0e0;
+    background: #efefef;
   }
 
   // タイトル部の背景
@@ -464,6 +464,23 @@ p.to_top {
     padding:5px 20px !important;
   }
   
+  td.blob-code {
+    font: 16px/24px 'Lucida Sans', Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+    text-shadow: 0px 1px 0px #000;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 10px 0px 10px !important;
+    // background-color: #333333;
+    // color:#bfbfbf !important;
+  }
+  td.blob-num {
+    font: 16px/24px 'Lucida Sans', Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal;
+    text-shadow: 0px 1px 0px #000;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 10px 0px 4px !important;
+    // background-color: #333333;
+    // color:#bfbfbf;
+  }
+
 }
 /* -------------------------------------------------------------------------------------------------------- */
 // 折り畳み関連
